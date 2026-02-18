@@ -67,7 +67,48 @@ const ChartContainer = React.forwardRef<
 })
 ChartContainer.displayName = 'Chart'
 
-const ChartStyle = () => null
+type ChartStyleProps = {
+  id: string
+  config: ChartConfig
+}
+
+const ChartStyle = ({ id, config }: ChartStyleProps) => {
+  const styles = React.useMemo(() => {
+    const entries = Object.entries(config).filter(
+      ([, item]) => item.color || item.theme,
+    )
+
+    if (!entries.length) {
+      return ''
+    }
+
+    return Object.entries(THEMES)
+      .map(([theme, selector]) => {
+        const themeVars = entries
+          .map(([key, item]) => {
+            const color = item.theme
+              ? item.theme[theme as keyof typeof THEMES]
+              : item.color
+
+            return color ? `--color-${key}: ${color};` : ''
+          })
+          .filter(Boolean)
+          .join(' ')
+
+        return themeVars
+          ? `${selector} [data-chart="${id}"] { ${themeVars} }`
+          : ''
+      })
+      .filter(Boolean)
+      .join('\n')
+  }, [config, id])
+
+  if (!styles) {
+    return null
+  }
+
+  return <style dangerouslySetInnerHTML={{ __html: styles }} />
+}
 
 const ChartTooltip = RechartsPrimitive.Tooltip
 

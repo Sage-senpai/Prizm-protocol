@@ -1,6 +1,11 @@
 import { ApiPromise, WsProvider } from '@polkadot/api';
-import type { Header } from '@polkadot/types/interfaces';
 import { appConfig } from '@/lib/config';
+
+type HeaderLike = {
+  number: {
+    toNumber: () => number;
+  };
+};
 
 let apiPromise: ApiPromise | null = null;
 let provider: WsProvider | null = null;
@@ -36,12 +41,14 @@ export async function fetchChainInfo() {
   };
 }
 
-export async function subscribeNewHeads(onHeader: (header: Header) => void) {
+export async function subscribeNewHeads(onHeader: (header: HeaderLike) => void) {
   const api = await getPolkadotApi();
   return api.rpc.chain.subscribeNewHeads(onHeader);
 }
 
-export async function subscribeFinalizedHeads(onHeader: (header: Header) => void) {
+export async function subscribeFinalizedHeads(
+  onHeader: (header: HeaderLike) => void,
+) {
   const api = await getPolkadotApi();
   return api.rpc.chain.subscribeFinalizedHeads(onHeader);
 }

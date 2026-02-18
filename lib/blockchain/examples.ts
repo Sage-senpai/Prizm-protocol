@@ -32,13 +32,20 @@ export async function submitPolkadotTransfer(params: {
 
   return new Promise<string>((resolve, reject) => {
     const amount = new BN(params.amountPlanck);
-    const unsubscribe = api.tx.balances
+    let unsubscribe: null | (() => void) = null;
+
+    api.tx.balances
       .transferKeepAlive(params.to, amount)
       .signAndSend(params.from, { signer }, (result) => {
         if (result.status.isInBlock || result.status.isFinalized) {
           resolve(result.status.asFinalized.toHex());
-          unsubscribe();
+          if (unsubscribe) {
+            unsubscribe();
+          }
         }
+      })
+      .then((unsub) => {
+        unsubscribe = unsub;
       })
       .catch((error) => reject(error));
   });

@@ -1,4 +1,10 @@
 export * from './polkadot';
 export * from './polkadot-wallet';
 export * from './evm';
-export * from './examples';
+export {
+  fetchPolkadotLatestBlock,
+  subscribePolkadotFinalizedBlocks,
+  submitPolkadotTransfer,
+  fetchEvmChainData,
+  submitEvmExampleTransaction,
+} from './examples';

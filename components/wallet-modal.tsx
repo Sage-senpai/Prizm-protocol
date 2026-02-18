@@ -71,41 +71,41 @@ export function WalletModal() {
 
   return (
     <Dialog open={showModal} onOpenChange={setShowModal}>
-      <DialogContent className="glass-deep border-white/10 sm:max-w-md">
+      <DialogContent className="glass-deep max-h-[85vh] overflow-hidden border-black/15 p-5 sm:max-w-[440px] sm:p-6 dark:border-white/10">
         <DialogHeader>
-          <DialogTitle className="text-2xl text-white">Connect Wallet</DialogTitle>
-          <DialogDescription className="text-white/60">
+          <DialogTitle className="text-xl text-foreground sm:text-2xl">Connect Wallet</DialogTitle>
+          <DialogDescription className="text-muted-foreground">
             Select a Polkadot or EVM wallet. Approve the connection in your extension.
           </DialogDescription>
         </DialogHeader>
 
-        <div className="space-y-3">
+        <div className="max-h-[52vh] space-y-2 overflow-y-auto pr-1">
           {WALLET_PROVIDERS.map((provider) => (
             <button
               key={provider.id}
               type="button"
               onClick={() => handleConnect(provider.id)}
               disabled={connectingId !== null}
-              className="w-full flex items-center gap-4 glass px-4 py-3 rounded-2xl border border-white/10 hover:border-white/30 transition-all disabled:opacity-60"
+              className="glass w-full rounded-xl border border-black/10 px-3 py-2.5 transition-all hover:border-black/30 disabled:opacity-60 dark:border-white/10 dark:hover:border-white/30"
             >
-              <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${provider.accent} text-black flex items-center justify-center font-bold`}>
+              <div className={`h-10 w-10 rounded-lg bg-gradient-to-br ${provider.accent} flex items-center justify-center text-sm font-bold text-black`}>
                 {provider.badge}
               </div>
               <div className="flex-1 text-left">
-                <p className="text-white font-semibold">{provider.name}</p>
-                <p className="text-white/60 text-sm">{provider.description}</p>
+                <p className="font-semibold text-foreground">{provider.name}</p>
+                <p className="text-xs text-muted-foreground">{provider.description}</p>
               </div>
               {connectingId === provider.id ? (
-                <Loader2 className="w-5 h-5 text-white animate-spin" />
+                <Loader2 className="h-4 w-4 animate-spin text-foreground" />
               ) : (
-                <Wallet className="w-5 h-5 text-white/60" />
+                <Wallet className="h-4 w-4 text-muted-foreground" />
               )}
             </button>
           ))}
         </div>
 
-        <div className="mt-4 p-4 bg-white/5 border border-white/10 rounded-xl">
-          <p className="text-white/60 text-sm">
+        <div className="mt-3 rounded-xl border border-black/10 bg-black/5 p-3 dark:border-white/10 dark:bg-white/5">
+          <p className="text-xs text-muted-foreground">
             By connecting a wallet, you agree to the Terms of Service and acknowledge the current demo state.
           </p>
         </div>

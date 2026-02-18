@@ -1,18 +1,35 @@
-import { web3Accounts, web3Enable, web3FromSource } from '@polkadot/extension-dapp';
-import { cryptoWaitReady } from '@polkadot/util-crypto';
-
 export type PolkadotAccount = {
   address: string;
   name?: string;
   source?: string;
 };
 
-export async function enablePolkadotExtensions(appName: string) {
+type ExtensionDapp = typeof import('@polkadot/extension-dapp');
+
+function assertBrowserApi(apiName: string) {
+  if (typeof window === 'undefined') {
+    throw new Error(`${apiName} is only available in the browser runtime.`);
+  }
+}
+
+async function getExtensionDapp(): Promise<ExtensionDapp> {
+  assertBrowserApi('Polkadot extension API');
+  return import('@polkadot/extension-dapp');
+}
+
+async function waitForCryptoReady() {
+  const { cryptoWaitReady } = await import('@polkadot/util-crypto');
   await cryptoWaitReady();
+}
+
+export async function enablePolkadotExtensions(appName: string) {
+  await waitForCryptoReady();
+  const { web3Enable } = await getExtensionDapp();
   return web3Enable(appName);
 }
 
 export async function getPolkadotAccounts(appName: string, preferredSource?: string) {
+  const { web3Accounts } = await getExtensionDapp();
   await enablePolkadotExtensions(appName);
   const accounts = await web3Accounts();
 
@@ -34,6 +51,7 @@ export async function getPolkadotAccounts(appName: string, preferredSource?: str
 }
 
 export async function getPolkadotSigner(source: string) {
+  const { web3FromSource } = await getExtensionDapp();
   const injector = await web3FromSource(source);
   return injector.signer;
 }
