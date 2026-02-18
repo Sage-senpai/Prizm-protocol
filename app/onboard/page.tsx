@@ -117,8 +117,8 @@ export default function OnboardPage() {
                   <motion.div
                     className={`relative w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center font-bold transition-all duration-300 ${
                       currentStep >= step.id
-                        ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg shadow-purple-500/50'
-                        : 'bg-white/10 text-white/50 border border-white/20'
+                        ? 'bg-white/15 text-white border border-white/30'
+                        : 'bg-white/5 text-white/50 border border-white/15'
                     }`}
                     whileHover={{ scale: 1.1 }}
                   >
@@ -132,7 +132,7 @@ export default function OnboardPage() {
                     <div
                       className={`flex-1 h-1 rounded-full transition-all duration-500 ${
                         currentStep > step.id
-                          ? 'bg-gradient-to-r from-purple-500 to-pink-500'
+                          ? 'bg-white/40'
                           : 'bg-white/10'
                       }`}
                     />
@@ -165,8 +165,8 @@ export default function OnboardPage() {
               <div className="space-y-8">
                 <div className="flex justify-center">
                   <motion.div
-                    className="w-20 h-20 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center"
-                    animate={{ y: [0, -10, 0] }}
+                    className="w-20 h-20 rounded-2xl border border-white/20 bg-white/5 flex items-center justify-center"
+                    animate={{ y: [0, -6, 0] }}
                     transition={{ duration: 3, repeat: Infinity }}
                   >
                     <Wallet className="w-10 h-10 text-white" />
@@ -220,8 +220,8 @@ export default function OnboardPage() {
               <div className="space-y-8">
                 <div className="flex justify-center">
                   <motion.div
-                    className="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-500 rounded-2xl flex items-center justify-center"
-                    animate={{ rotate: [0, 5, -5, 0] }}
+                    className="w-20 h-20 rounded-2xl border border-white/20 bg-white/5 flex items-center justify-center"
+                    animate={{ rotate: [0, 3, -3, 0] }}
                     transition={{ duration: 3, repeat: Infinity }}
                   >
                     <User className="w-10 h-10 text-white" />
@@ -262,7 +262,7 @@ export default function OnboardPage() {
                     <select
                       value={profileData.riskTolerance}
                       onChange={(e) => setProfileData({ ...profileData, riskTolerance: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl text-white bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/20 transition-colors"
+                      className="w-full px-4 py-3 rounded-xl text-white bg-white/5 backdrop-blur-md border border-white/15 hover:bg-white/10 transition-colors"
                     >
                       <option value="low" className="bg-slate-900">Low - Conservative</option>
                       <option value="medium" className="bg-slate-900">Medium - Balanced</option>
@@ -298,8 +298,8 @@ export default function OnboardPage() {
               <div className="space-y-8">
                 <div className="flex justify-center">
                   <motion.div
-                    className="w-20 h-20 bg-gradient-to-br from-green-500 to-blue-500 rounded-2xl flex items-center justify-center"
-                    animate={{ scale: [1, 1.1, 1] }}
+                    className="w-20 h-20 rounded-2xl border border-white/20 bg-white/5 flex items-center justify-center"
+                    animate={{ scale: [1, 1.05, 1] }}
                     transition={{ duration: 2, repeat: Infinity }}
                   >
                     <Shield className="w-10 h-10 text-white" />
@@ -314,8 +314,8 @@ export default function OnboardPage() {
 
                 <div className="bg-white/5 rounded-xl p-6 space-y-4">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center">
-                      <Check className="w-5 h-5 text-purple-400" />
+                    <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
+                      <Check className="w-5 h-5 text-white/70" />
                     </div>
                     <div>
                       <p className="text-white font-semibold">Profile Created</p>
@@ -369,8 +369,8 @@ export default function OnboardPage() {
               <div className="space-y-8">
                 <div className="flex justify-center">
                   <motion.div
-                    className="w-20 h-20 bg-gradient-to-br from-yellow-500 to-orange-500 rounded-2xl flex items-center justify-center"
-                    animate={{ y: [0, -10, 0] }}
+                    className="w-20 h-20 rounded-2xl border border-white/20 bg-white/5 flex items-center justify-center"
+                    animate={{ y: [0, -6, 0] }}
                     transition={{ duration: 2, repeat: Infinity }}
                   >
                     <Zap className="w-10 h-10 text-white" />

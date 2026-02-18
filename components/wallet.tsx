@@ -74,7 +74,7 @@ export function WalletSection() {
                   <p className="text-white/60 text-lg font-medium mb-2">Total Balance</p>
                   <h3 className="text-5xl md:text-6xl font-bold text-white">{walletData.balance}</h3>
                 </div>
-                <div className="w-16 h-16 bg-gradient-to-br from-purple-400 to-pink-400 rounded-2xl flex items-center justify-center">
+                <div className="w-16 h-16 bg-white/10 border border-white/10 rounded-2xl flex items-center justify-center">
                   <Wallet className="w-8 h-8 text-white" />
                 </div>
               </div>
@@ -84,10 +84,10 @@ export function WalletSection() {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-white/60 text-sm font-medium">Total Earned</p>
-                    <p className="text-3xl md:text-4xl font-bold text-green-400 mt-2">{walletData.earned}</p>
+                    <p className="text-3xl md:text-4xl font-bold text-white mt-2">{walletData.earned}</p>
                   </div>
                   <div className="text-right">
-                    <span className="inline-block px-4 py-2 bg-green-500/20 text-green-300 rounded-lg text-sm font-semibold">
+                    <span className="inline-block px-4 py-2 bg-white/10 text-white/80 rounded-lg text-sm font-semibold border border-white/10">
                       +7.24% this month
                     </span>
                   </div>
@@ -117,7 +117,7 @@ export function WalletSection() {
                     whileHover={{ x: 4 }}
                   >
                     <div className="flex items-center gap-3 flex-1 min-w-0">
-                      <div className="w-10 h-10 bg-gradient-to-br from-purple-400 to-pink-400 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <div className="w-10 h-10 bg-white/10 border border-white/10 rounded-lg flex items-center justify-center flex-shrink-0">
                         <span className="text-white font-bold text-sm">{asset.name[0]}</span>
                       </div>
                       <div className="min-w-0 flex-1">
@@ -157,9 +157,11 @@ export function WalletSection() {
                 >
                   <div className="flex items-center gap-4 flex-1">
                     <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
-                      tx.type === 'deposit' ? 'bg-green-500/20 text-green-400' :
-                      tx.type === 'withdraw' ? 'bg-red-500/20 text-red-400' :
-                      'bg-purple-500/20 text-purple-400'
+                      tx.type === 'deposit'
+                        ? 'bg-white/15 text-white'
+                        : tx.type === 'withdraw'
+                          ? 'bg-white/10 text-white/80'
+                          : 'bg-white/10 text-white/70'
                     }`}>
                       <Icon className="w-5 h-5" />
                     </div>
@@ -168,9 +170,7 @@ export function WalletSection() {
                       <p className="text-white/50 text-sm">{tx.time}</p>
                     </div>
                   </div>
-                  <p className={`font-bold text-lg ${
-                    tx.amount.startsWith('+') ? 'text-green-400' : 'text-red-400'
-                  }`}>
+                  <p className="font-bold text-lg text-white/90">
                     {tx.amount}
                   </p>
                 </motion.div>

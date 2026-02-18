@@ -6,10 +6,13 @@
 Users can now:
 - **Land on homepage** and see full platform overview
 - **Click "Start Onboarding"** button (prominent on landing page)
-- **Connect a wallet** using the modal with 3 providers:
-  - MetaMask 🦊
-  - WalletConnect 📱
-  - Coinbase Wallet 🌐
+- **Connect a wallet** using the modal with Polkadot-first providers:
+  - Polkadot.js Extension
+  - Talisman
+  - SubWallet
+  - Nova
+  - MetaMask (EVM)
+- **First-run guide bubble** appears with quick links to onboarding and markets
 - **Auto-redirect to onboarding** after wallet connection
 - **Create a profile** with username, email, and risk preference
 - **Complete account verification** with step-by-step flow
@@ -236,7 +239,7 @@ Actions:
 - Hover over buttons
 - Watch scroll animations
 - See progress bar animations
-- Custom cursor effect
+- Standard cursor behavior
 
 ### 5. View Console
 - No errors in browser console
@@ -329,3 +332,9 @@ Check the following documentation:
 - `CHECKLIST.md` - Feature checklist
 
 Enjoy exploring Prizm Protocol! 🚀
+
+
+
+
+
+

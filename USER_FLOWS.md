@@ -63,7 +63,7 @@
 ### Current Features (MVP - 100% Complete)
 
 #### 1. Authentication & Wallet Integration ✅
-- **Multi-chain wallet support**: MetaMask, WalletConnect, Coinbase Wallet
+- **Multi-chain wallet support**: Polkadot.js, Talisman, SubWallet, Nova, MetaMask
 - **Quick connection**: 1-click wallet linking
 - **Address display**: Shows abbreviated address (0x1234...5678)
 - **Disconnect option**: One-click wallet disconnect
@@ -81,7 +81,7 @@
 
 **Step 1: Wallet Connection**
 - Display: Wallet selection modal
-- Options: MetaMask, WalletConnect, Coinbase
+- Options: Polkadot.js, Talisman, SubWallet, Nova, MetaMask
 - Feedback: Toast notification on success
 - Auto-redirect: To step 2 after 1.5s
 
@@ -309,7 +309,7 @@
 - Border glow effects
 
 **Animated Elements**:
-- Custom gradient cursor
+- Standard Cursor
 - Animated background (CSS gradient orbs)
 - Number counters (stagger effect)
 - Chart animations (draw + fill)
@@ -373,7 +373,7 @@ START
 │  └─ Redirect to /onboard
 │
 ├─ Step 1: Connect Wallet
-│  ├─ Select provider (MetaMask, WalletConnect, Coinbase)
+│  ├─ Select provider (Polkadot.js, Talisman, SubWallet, Nova, MetaMask)
 │  ├─ Approve connection popup
 │  ├─ Success toast appears
 │  └─ Auto-advance to Step 2 (1.5s delay)
@@ -687,4 +687,8 @@ Time: 1-2 minutes
 The current MVP demonstrates a complete user experience from onboarding through portfolio management. The next phase requires integrating real blockchain infrastructure and backend services to transform from a demo into a live financial platform.
 
 The feature roadmap is designed to be executed in priority order, with critical infrastructure (smart contracts, real API) being the foundation for all subsequent features.
+
+
+
+
 

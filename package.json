@@ -3,10 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbo",
+    "dev": "next dev",
     "build": "next build",
+    "build:staging": "cross-env NEXT_PUBLIC_APP_ENV=staging next build",
+    "build:production": "cross-env NEXT_PUBLIC_APP_ENV=production next build",
     "start": "next start",
-    "lint": "next lint"
+    "start:staging": "cross-env NEXT_PUBLIC_APP_ENV=staging next start",
+    "lint": "next lint",
+    "type-check": "tsc --noEmit",
+    "test": "vitest",
+    "test:ci": "vitest run"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
@@ -37,6 +43,10 @@
     "@radix-ui/react-toggle": "1.1.1",
     "@radix-ui/react-toggle-group": "1.1.1",
     "@radix-ui/react-tooltip": "1.1.6",
+    "@polkadot/api": "^16.5.4",
+    "@polkadot/extension-dapp": "^0.57.1",
+    "@polkadot/util": "^14.0.1",
+    "@polkadot/util-crypto": "^14.0.1",
     "@react-three/drei": "^9.112.0",
     "@react-three/fiber": "^8.17.12",
     "autoprefixer": "^10.4.20",
@@ -45,6 +55,7 @@
     "cmdk": "1.1.1",
     "date-fns": "4.1.0",
     "embla-carousel-react": "8.5.1",
+    "ethers": "^6.13.4",
     "framer-motion": "^11.0.0",
     "input-otp": "1.4.1",
     "lucide-react": "^0.544.0",
@@ -65,12 +76,17 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.13",
+    "@testing-library/jest-dom": "^6.4.2",
+    "@testing-library/react": "^16.2.0",
     "@types/node": "^22",
     "@types/react": "19.2.7",
     "@types/react-dom": "19.2.3",
+    "cross-env": "^7.0.3",
+    "jsdom": "^24.0.0",
     "postcss": "^8.5",
     "tailwindcss": "^3.4.17",
-    "typescript": "5.7.3"
+    "typescript": "5.7.3",
+    "vitest": "^2.0.5"
   },
   "pnpm": {
     "overrides": {

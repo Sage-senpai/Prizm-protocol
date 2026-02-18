@@ -14,32 +14,39 @@ const WALLET_PROVIDERS: Array<{
   accent: string;
 }> = [
   {
-    id: 'metamask',
-    name: 'MetaMask',
-    description: 'Browser wallet for EVM-based assets',
-    badge: 'MM',
-    accent: 'from-gray-200 to-gray-500',
+    id: 'polkadot-js',
+    name: 'Polkadot.js Extension',
+    description: 'Browser extension for Polkadot accounts',
+    badge: 'PX',
+    accent: 'from-white to-zinc-400',
   },
   {
     id: 'talisman',
     name: 'Talisman',
-    description: 'Polkadot-native wallet for PoP lending',
+    description: 'Polkadot-native wallet with multi-chain support',
     badge: 'TL',
-    accent: 'from-gray-300 to-gray-600',
+    accent: 'from-white to-zinc-500',
   },
   {
     id: 'subwallet',
     name: 'SubWallet',
     description: 'Multi-chain wallet with fast signing',
     badge: 'SW',
-    accent: 'from-gray-100 to-gray-400',
+    accent: 'from-white to-zinc-300',
   },
   {
     id: 'nova',
     name: 'Nova',
     description: 'Mobile-first wallet with secure vaults',
     badge: 'NV',
-    accent: 'from-gray-200 to-gray-700',
+    accent: 'from-white to-zinc-600',
+  },
+  {
+    id: 'metamask',
+    name: 'MetaMask (EVM)',
+    description: 'EVM wallet for Moonbeam Solidity contracts',
+    badge: 'MM',
+    accent: 'from-white to-zinc-500',
   },
 ];
 
@@ -68,7 +75,7 @@ export function WalletModal() {
         <DialogHeader>
           <DialogTitle className="text-2xl text-white">Connect Wallet</DialogTitle>
           <DialogDescription className="text-white/60">
-            Choose a wallet to continue. This is a mock connection for the demo.
+            Select a Polkadot or EVM wallet. Approve the connection in your extension.
           </DialogDescription>
         </DialogHeader>
 
@@ -99,7 +106,7 @@ export function WalletModal() {
 
         <div className="mt-4 p-4 bg-white/5 border border-white/10 rounded-xl">
           <p className="text-white/60 text-sm">
-            By connecting a wallet, you agree to the Terms of Service and acknowledge demo-only functionality.
+            By connecting a wallet, you agree to the Terms of Service and acknowledge the current demo state.
           </p>
         </div>
       </DialogContent>

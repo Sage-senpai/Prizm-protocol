@@ -1,111 +1,72 @@
 'use client';
 
-import { ArrowRight, ShieldCheck, Zap } from 'lucide-react';
+import { ArrowRight, ShieldCheck } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { ScrollIndicator } from './scroll-indicator';
 import Link from 'next/link';
+import { ScrollIndicator } from './scroll-indicator';
 import { useWallet } from '@/context/wallet-context';
 
 export function Hero() {
   const { setShowModal } = useWallet();
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.3,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.8, ease: 'easeOut' },
-    },
-  };
-
   return (
-    <div className="relative min-h-screen flex items-center justify-center pt-20 pb-12 overflow-hidden particle-bg">
-      <div className="absolute inset-0 bg-black/40" />
-
-      {/* Animated background blobs */}
-      <div className="absolute top-0 -left-40 w-80 h-80 bg-white/10 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob" />
-      <div className="absolute top-40 -right-40 w-80 h-80 bg-white/5 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob animation-delay-2000" />
-      <div className="absolute -bottom-8 left-1/2 w-80 h-80 bg-gray-500/10 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob animation-delay-4000" />
-
-      <div className="relative z-10 container mx-auto px-4">
+    <section id="overview" className="relative min-h-screen flex items-center justify-center pt-24 pb-16">
+      <div className="relative z-10 mx-auto w-full max-w-5xl px-4 text-center">
         <motion.div
-          className="text-center space-y-8"
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+          className="space-y-8"
         >
-          {/* Badge */}
-          <motion.div variants={itemVariants} className="flex justify-center">
-            <div className="glass px-6 py-3 inline-flex items-center gap-2">
-              <Zap className="w-4 h-4 text-white" />
-              <span className="text-sm font-medium text-white/80">Launching Prizm Protocol 2026</span>
-            </div>
-          </motion.div>
+          <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-2 text-xs uppercase tracking-[0.28em] text-white/60">
+            Prizm Protocol
+          </div>
 
-          {/* Main heading */}
-          <motion.div variants={itemVariants} className="space-y-4">
-            <h1 className="text-5xl md:text-7xl font-bold text-white leading-tight">
-              Borrow Against Real Assets{' '}
-              <span className="gradient-text">- Secured by Real Humans</span>
+          <div className="space-y-4">
+            <h1 className="text-5xl md:text-7xl font-semibold text-white">
+              Human-first liquidity for real-world assets.
             </h1>
-            <p className="text-xl md:text-2xl text-white/70 max-w-3xl mx-auto">
-              PoP-weighted RWA lending on Polkadot/Moonbeam. Verified humans unlock higher, safer borrow power while bots are capped.
+            <p className="text-lg md:text-xl text-white/60 max-w-3xl mx-auto">
+              A monochrome, trust-weighted lending layer on Polkadot. Proof of Personhood lifts borrow caps for verified humans and keeps pools resilient.
             </p>
-          </motion.div>
+          </div>
 
-          {/* CTA Buttons */}
-          <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 justify-center pt-6">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button
               type="button"
               onClick={() => setShowModal(true)}
-              className="glass-button group inline-flex items-center justify-center text-base font-bold px-8 py-4"
+              className="glass-button group text-base font-semibold px-8 py-4"
             >
               Connect Wallet
-              <ArrowRight className="inline-block ml-3 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="ml-3 h-5 w-5 transition-transform group-hover:translate-x-1" />
             </button>
             <Link
               href="/markets"
-              className="glass px-8 py-4 text-white font-semibold rounded-full hover:bg-white/20 transition-all duration-300 inline-flex items-center justify-center text-base"
+              className="button-secondary text-base font-semibold px-8 py-4"
             >
               Explore Markets
             </Link>
-          </motion.div>
+          </div>
 
-          {/* Stats */}
-          <motion.div
-            variants={itemVariants}
-            className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-12 max-w-3xl mx-auto"
-          >
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-8">
             {[
               { label: 'Total Supplied', value: '$1.9B' },
               { label: 'Active Vaults', value: '6' },
               { label: 'Verified Humans', value: '32K+' },
             ].map((stat) => (
               <div key={stat.label} className="glass px-6 py-4">
-                <div className="flex items-center justify-center gap-2 text-white/70 text-sm font-medium">
-                  <ShieldCheck className="w-4 h-4 text-white/60" />
+                <div className="flex items-center justify-center gap-2 text-white/70 text-xs uppercase tracking-[0.2em]">
+                  <ShieldCheck className="h-4 w-4 text-white/50" />
                   <span>{stat.label}</span>
                 </div>
-                <p className="text-2xl font-bold text-white mt-2">{stat.value}</p>
+                <p className="mt-2 text-2xl font-semibold text-white">{stat.value}</p>
               </div>
             ))}
-          </motion.div>
+          </div>
 
-          {/* Scroll Indicator */}
           <ScrollIndicator />
         </motion.div>
       </div>
-    </div>
+    </section>
   );
 }

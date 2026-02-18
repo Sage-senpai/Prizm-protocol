@@ -107,7 +107,12 @@ function VaultScene() {
 export function Landing3DBackground() {
   return (
     <div className="pointer-events-none fixed inset-0 -z-20">
-      <Canvas dpr={[1, 1.5]} camera={{ position: [0, 2.5, 10], fov: 45 }} shadows>
+      <Canvas
+        dpr={[1, 1.5]}
+        camera={{ position: [0, 2.5, 10], fov: 45 }}
+        shadows
+        className="h-full w-full"
+      >
         <ambientLight intensity={0.55} />
         <directionalLight position={[6, 8, 6]} intensity={0.9} castShadow />
         <pointLight position={[-6, 4, -2]} intensity={0.55} />

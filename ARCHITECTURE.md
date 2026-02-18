@@ -13,7 +13,7 @@ Prizm is a production-ready DeFi lending platform featuring real-world asset (RW
 - **Forms**: React Hook Form with validation
 - **Charts**: Recharts for data visualization
 - **State Management**: React Context (Wallet, Toast)
-- **Fonts**: Work Sans (Avenir alternative)
+- **Fonts**: Space Grotesk + IBM Plex Sans (Avenir alternative)
 - **UI Components**: shadcn/ui full suite
 - **Package Manager**: pnpm
 
@@ -39,8 +39,8 @@ prizm/
 │   └── globals.css              # Global styles & theme
 │
 ├── components/
-│   ├── animated-background.tsx   # CSS gradient orb animations
-│   ├── custom-cursor.tsx         # Gradient cursor effect
+│   ├── animated-background.tsx   # Canvas particle animations
+│   ├── how-to-bubble.tsx        # First-run guide bubble
 │   ├── navigation.tsx            # Global navbar with wallet
 │   ├── hero.tsx                  # Landing hero section
 │   ├── features.tsx              # 8 feature showcase cards
@@ -67,8 +67,8 @@ prizm/
 
 ### 1. Authentication & Wallet Integration
 - **WalletContext**: Centralized wallet state management
-- **WalletModal**: Multi-chain wallet selector (MetaMask, WalletConnect, Coinbase)
-- **Session Management**: Mock session with address generation
+- **WalletModal**: Multi-chain wallet selector (Polkadot.js, Talisman, SubWallet, Nova, MetaMask)
+- **Session Management**: Local session with address persistence
 - **Auto-redirect**: New users → Onboarding flow
 
 ### 2. Onboarding System
@@ -113,7 +113,7 @@ Dark Theme (Primary):
 ```
 
 ### Typography
-- **Font Family**: Work Sans (Avenir alternative from Google Fonts)
+- **Font Family**: Space Grotesk + IBM Plex Sans (Avenir alternative from Google Fonts)
 - **Weights**: 400 (regular), 500 (medium), 600 (semibold), 700 (bold)
 - **Scale**: Responsive heading hierarchy with Tailwind classes
 - **Line Height**: 1.4-1.6 for readability
@@ -197,8 +197,8 @@ Dashboard (Portfolio View)
 ### Component Hierarchy
 ```
 RootLayout
-├── AnimatedBackground (CSS orbs)
-├── CustomCursor (gradient effect)
+├── AnimatedBackground (canvas particles)
+├── HowToBubble (first-run guide)
 ├── WalletProvider
 ├── ToastProvider
 ├── WalletModal
@@ -214,7 +214,7 @@ RootLayout
 
 1. **Code Splitting**: Automatic per-route via Next.js
 2. **Image Optimization**: Next Image component
-3. **Font Loading**: Work Sans with `variable` prop
+3. **Font Loading**: Space Grotesk + IBM Plex Sans with `variable` prop
 4. **Animation Performance**: 
    - CSS animations for ambient effects
    - GPU acceleration via transforms
@@ -241,15 +241,15 @@ RootLayout
 
 ## Deployment
 
-- **Platform**: Vercel (recommended)
+- **Platform**: Any Node.js host or container platform
 - **Builds**: Next.js SSG + ISR capable
 - **Environment**: Node.js 18+
 - **Package Manager**: pnpm 8+
 
 ## Future Enhancements
 
-1. **Blockchain Integration**: ethers.js / Web3.js
-2. **Real Smart Contracts**: Lending protocol contracts
+1. **Smart Contracts**: Lending protocol contracts
+2. **Chain Expansion**: Additional Polkadot parachains and EVM networks
 3. **Database**: PostgreSQL with Prisma ORM
 4. **Authentication**: NextAuth.js or Supabase
 5. **WebSocket**: Real-time price feeds
@@ -262,7 +262,7 @@ RootLayout
 - **Performance**: Core Web Vitals tracking
 - **Errors**: Sentry integration ready
 - **Usage**: PostHog events structure in place
-- **Health**: Uptime monitoring via Vercel Analytics
+- **Health**: Uptime monitoring via standard probes (Ping, HTTP checks, etc.)
 
 ## Contributing Guidelines
 
@@ -280,4 +280,11 @@ RootLayout
 - **Types**: Full TypeScript coverage
 - **Testing**: Mock data for development
 - **CI/CD**: GitHub Actions ready
+
+
+
+
+
+
+
 

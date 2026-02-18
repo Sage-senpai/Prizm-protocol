@@ -6,7 +6,7 @@
 
 **Prizm** is a next-generation DeFi lending protocol that brings institutional-grade real-world asset (RWA) collateral to decentralized finance. Beautiful white/black glassmorphic design with liquid animations that feel alive.
 
-[Live Demo](https://prizm.vercel.app) • [Documentation](#documentation) • [GitHub](https://github.com/yourusername/prizm) • [Twitter](https://twitter.com/prizm_protocol)
+Live Demo (self-hosted) • [Documentation](#documentation) • [GitHub](https://github.com/yourusername/prizm) • [Twitter](https://twitter.com/prizm_protocol)
 
 ---
 
@@ -81,14 +81,14 @@ Visit `http://localhost:3000` - you should see the landing page with full animat
 #### Technical Excellence
 - ✅ **Glass Morphism Design**: Frosted glass cards with backdrop blur
 - ✅ **Smooth Animations**: 25+ animation types (float, glow, slide, fade, rotate, blob)
-- ✅ **Gradient Cursor**: Custom animated cursor with glow effect
+- ✅ **Standard Cursor**: Native system pointer (no custom rendering)
 - ✅ **Form Validation**: Real-time validation with helpful error messages
 - ✅ **Toast Notifications**: Beautiful toast system (success, error, warning, info)
 - ✅ **TypeScript**: 100% type-safe codebase
 - ✅ **Accessibility**: Semantic HTML, ARIA labels, keyboard navigation
 
 #### Design
-- ✅ **Work Sans Font**: Modern Avenir-style font family
+- ✅ **Space Grotesk + IBM Plex Sans Font**: Modern Avenir-style font family
 - ✅ **White/Black Theme**: Minimalist color palette with glassmorphic effects
 - ✅ **Consistency**: Unified design language across all pages
 - ✅ **Animations**: "Alive" feel with subtle, professional animations
@@ -121,7 +121,8 @@ Visit `http://localhost:3000` - you should see the landing page with full animat
 - **Animations**: Framer Motion 11
 - **Charts**: Recharts
 - **UI Components**: shadcn/ui (full suite)
-- **Fonts**: Work Sans (Google Fonts)
+- **Fonts**: Space Grotesk + IBM Plex Sans (Google Fonts)
+- **Blockchain**: polkadot.js + ethers (Moonbeam-compatible)
 
 ### State Management
 - React Context API (Wallet, Toast)
@@ -135,10 +136,10 @@ Visit `http://localhost:3000` - you should see the landing page with full animat
 - **Testing**: Vitest + Playwright ready
 
 ### Deployment
-- **Hosting**: Vercel (recommended)
+- **Hosting**: Any Node.js host or container platform
 - **Database**: PostgreSQL ready (future)
 - **API**: REST ready (future)
-- **CDN**: Vercel Edge Network
+- **CDN**: Any CDN or reverse proxy
 
 ---
 
@@ -170,7 +171,7 @@ prizm/
 │   ├── cta-section.tsx          # Call-to-action section
 │   ├── footer.tsx               # Global footer
 │   ├── animated-background.tsx  # CSS gradient orbs
-│   ├── custom-cursor.tsx        # Gradient cursor effect
+│   ├── how-to-bubble.tsx        # First-run guide bubble
 │   ├── wallet-modal.tsx         # Wallet connection flow
 │   ├── dashboard/               # Dashboard components
 │   ├── analytics.tsx            # Charts & metrics
@@ -268,7 +269,7 @@ Glass: rgba(0, 0, 0, 0.15) + backdrop-blur-2xl
 
 ### Typography
 
-**Font**: Work Sans (Avenir alternative)
+**Font**: Space Grotesk + IBM Plex Sans (Avenir alternative)
 ```
 Headings: Bold (700) or Semibold (600)
 Body: Regular (400) or Medium (500)
@@ -286,19 +287,19 @@ Scale: Responsive (16px base, scales to 20px on desktop)
 
 ## 🚀 Deployment
 
-### Vercel (Recommended)
+### Standalone Deployment
 
-One-click deployment:
+This project runs on any Node.js host or container platform without provider-specific bindings.
 
 ```bash
-# Connect GitHub repo to Vercel
-# Automatic deploys on main branch push
-# Built-in analytics & monitoring
-# Free SSL certificates
-# Edge functions ready
+# Build for production
+pnpm build
+
+# Start the server
+pnpm start
 ```
 
-Visit [Vercel Documentation](https://vercel.com/docs) for full instructions.
+For containerized deployments, use the Docker section below.
 
 ### Docker
 
@@ -462,4 +463,9 @@ Please include:
 ⭐ If you find this project helpful, please consider starring it!
 
 </div>
+
+
+
+
+
 

@@ -55,15 +55,12 @@
 
 ---
 
-### 4. Cursor Still Disappearing
-**Problem**: Custom cursor was hidden on desktop with `hidden lg:block`
+### 4. Standard Cursor Restored
+**Problem**: Custom cursor behavior conflicted with standard navigation patterns
 
 **Solution Applied**:
-- Removed `hidden lg:block` classes
-- Cursor now shows everywhere consistently
-
-**File Changed**:
-- `components/custom-cursor.tsx`
+- Removed the custom cursor component
+- Default system cursor is used everywhere
 
 ---
 
@@ -156,7 +153,7 @@ import { CTASection } from '@/components/cta-section';
 1. **components/navigation.tsx** - Fixed routing, simplified items
 2. **components/hero.tsx** - Fixed button styling
 3. **components/cta-section.tsx** - Fixed button routing
-4. **components/custom-cursor.tsx** - Removed hide class
+4. **components/how-to-bubble.tsx** - Added first-run guide bubble
 5. **app/page.tsx** - Removed unnecessary sections
 
 ---
@@ -172,7 +169,7 @@ import { CTASection } from '@/components/cta-section';
 - ✅ Vault details load
 - ✅ Profile page accessible
 - ✅ Mobile nav works
-- ✅ Cursor shows everywhere
+- ✅ Standard cursor used everywhere
 - ✅ All buttons are clickable
 - ✅ No broken links
 
@@ -196,4 +193,8 @@ Users can now:
 - Manage profile
 
 Everything is functional, responsive, and user-friendly!
+
+
+
+
 

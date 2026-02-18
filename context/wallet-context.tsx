@@ -1,13 +1,18 @@
 'use client';
 
 import React, { createContext, useContext, useEffect, useMemo, useState, ReactNode } from 'react';
+import { connectEvmWallet } from '@/lib/blockchain/evm';
+import { getPolkadotAccounts } from '@/lib/blockchain/polkadot-wallet';
 
-export type WalletType = 'metamask' | 'talisman' | 'subwallet' | 'nova';
+export type WalletType = 'polkadot-js' | 'talisman' | 'subwallet' | 'nova' | 'metamask';
+export type WalletNamespace = 'polkadot' | 'evm';
 
 interface WalletContextType {
   isConnected: boolean;
   address: string | null;
   walletType: WalletType | null;
+  walletNamespace: WalletNamespace | null;
+  accountSource: string | null;
   isVerified: boolean;
   borrowMultiplier: number;
   connectWallet: (walletType: WalletType) => Promise<void>;
@@ -19,11 +24,21 @@ interface WalletContextType {
 
 const WalletContext = createContext<WalletContextType | undefined>(undefined);
 const STORAGE_KEY = 'prizm-wallet-state';
+const WALLET_APP_NAME = 'Prizm Protocol';
+const WALLET_SOURCES: Record<WalletType, string | null> = {
+  'polkadot-js': 'polkadot-js',
+  talisman: 'talisman',
+  subwallet: 'subwallet-js',
+  nova: 'nova',
+  metamask: null,
+};
 
 export function WalletProvider({ children }: { children: ReactNode }) {
   const [isConnected, setIsConnected] = useState(false);
   const [address, setAddress] = useState<string | null>(null);
   const [walletType, setWalletType] = useState<WalletType | null>(null);
+  const [walletNamespace, setWalletNamespace] = useState<WalletNamespace | null>(null);
+  const [accountSource, setAccountSource] = useState<string | null>(null);
   const [isVerified, setIsVerified] = useState(false);
   const [borrowMultiplier, setBorrowMultiplier] = useState(1);
   const [showModal, setShowModal] = useState(false);
@@ -37,12 +52,16 @@ export function WalletProvider({ children }: { children: ReactNode }) {
         isConnected: boolean;
         address: string | null;
         walletType: WalletType | null;
+        walletNamespace: WalletNamespace | null;
+        accountSource: string | null;
         isVerified: boolean;
         borrowMultiplier: number;
       };
       setIsConnected(parsed.isConnected);
       setAddress(parsed.address);
       setWalletType(parsed.walletType);
+      setWalletNamespace(parsed.walletNamespace ?? null);
+      setAccountSource(parsed.accountSource ?? null);
       setIsVerified(parsed.isVerified);
       setBorrowMultiplier(parsed.borrowMultiplier || 1);
     } catch {
@@ -56,24 +75,32 @@ export function WalletProvider({ children }: { children: ReactNode }) {
       isConnected,
       address,
       walletType,
+      walletNamespace,
+      accountSource,
       isVerified,
       borrowMultiplier,
     };
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
-  }, [isConnected, address, walletType, isVerified, borrowMultiplier]);
+  }, [isConnected, address, walletType, walletNamespace, accountSource, isVerified, borrowMultiplier]);
 
   const connectWallet = async (selectedWallet: WalletType) => {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1200));
+      if (selectedWallet === 'metamask') {
+        const { address: evmAddress } = await connectEvmWallet();
+        setAddress(evmAddress);
+        setWalletNamespace('evm');
+        setAccountSource(null);
+      } else {
+        const preferredSource = WALLET_SOURCES[selectedWallet] ?? undefined;
+        const accounts = await getPolkadotAccounts(WALLET_APP_NAME, preferredSource);
+        if (!accounts.length) {
+          throw new Error('No Polkadot accounts found. Open your wallet and authorize access.');
+        }
+        setAddress(accounts[0].address);
+        setWalletNamespace('polkadot');
+        setAccountSource(accounts[0].source ?? null);
+      }
 
-      const mockAddresses: Record<WalletType, string> = {
-        metamask: '0x742d35Cc6634C0532925a3b844Bc9e7595f7eaB',
-        talisman: '0x8ba1f109551bD432803012645Ac136ddd64DBA72',
-        subwallet: '0x1234567890abcdef1234567890abcdef12345678',
-        nova: '0x91b4a89d9b4b9f7eaB5A1d0c3A31b0f1dE9B20a2',
-      };
-
-      setAddress(mockAddresses[selectedWallet]);
       setWalletType(selectedWallet);
       setIsConnected(true);
       setShowModal(false);
@@ -87,6 +114,8 @@ export function WalletProvider({ children }: { children: ReactNode }) {
     setIsConnected(false);
     setAddress(null);
     setWalletType(null);
+    setWalletNamespace(null);
+    setAccountSource(null);
     setIsVerified(false);
     setBorrowMultiplier(1);
   };
@@ -101,6 +130,8 @@ export function WalletProvider({ children }: { children: ReactNode }) {
       isConnected,
       address,
       walletType,
+      walletNamespace,
+      accountSource,
       isVerified,
       borrowMultiplier,
       connectWallet,
@@ -109,7 +140,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
       showModal,
       setShowModal,
     }),
-    [isConnected, address, walletType, isVerified, borrowMultiplier, showModal],
+    [isConnected, address, walletType, walletNamespace, accountSource, isVerified, borrowMultiplier, showModal],
   );
 
   return <WalletContext.Provider value={value}>{children}</WalletContext.Provider>;

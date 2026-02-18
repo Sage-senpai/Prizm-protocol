@@ -19,7 +19,7 @@ export function LendingMarket() {
       borrowers: 342,
       collateralRatio: 2.5,
       health: 'Excellent',
-      healthColor: 'text-green-400',
+      healthColor: 'text-white/80',
       icon: '🏰',
       description: 'Investment-grade commercial real estate across major metro areas.',
     },
@@ -34,7 +34,7 @@ export function LendingMarket() {
       borrowers: 287,
       collateralRatio: 2.0,
       health: 'Strong',
-      healthColor: 'text-blue-400',
+      healthColor: 'text-white/80',
       icon: '📊',
       description: 'Short-term financing for verified cross-border trade transactions.',
     },
@@ -49,7 +49,7 @@ export function LendingMarket() {
       borrowers: 198,
       collateralRatio: 2.2,
       health: 'Strong',
-      healthColor: 'text-blue-400',
+      healthColor: 'text-white/80',
       icon: '⛓️',
       description: 'Inventory and receivables financing backed by supply chain data.',
     },
@@ -110,13 +110,13 @@ export function LendingMarket() {
                 variants={itemVariants}
                 onClick={() => setSelectedPool(index)}
                 className={`w-full text-left transition-all duration-300 glass p-5 group ${
-                  selectedPool === index ? 'border-purple-400/50 bg-purple-500/10' : 'hover:border-white/30'
+                  selectedPool === index ? 'border-white/40 bg-white/10' : 'hover:border-white/30'
                 }`}
               >
                 <div className="flex items-start gap-4">
                   <div className="text-3xl">{pool.icon}</div>
                   <div className="flex-1 min-w-0">
-                    <h4 className="font-bold text-white group-hover:text-purple-300 transition-colors">
+                    <h4 className="font-bold text-white group-hover:text-white/80 transition-colors">
                       {pool.name}
                     </h4>
                     <p className="text-white/50 text-sm">{pool.symbol}</p>
@@ -124,7 +124,7 @@ export function LendingMarket() {
                   </div>
                   {selectedPool === index && (
                     <div className="flex-shrink-0">
-                      <ChevronRight className="w-5 h-5 text-purple-400" />
+                      <ChevronRight className="w-5 h-5 text-white/60" />
                     </div>
                   )}
                 </div>
@@ -161,7 +161,7 @@ export function LendingMarket() {
               </div>
 
               {/* Total Value */}
-              <div className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-xl p-6 mb-8">
+              <div className="bg-white/10 rounded-xl p-6 mb-8 border border-white/10">
                 <p className="text-white/60 text-sm font-medium mb-2">Total Value Locked</p>
                 <p className="text-4xl font-bold text-white">{selectedPool_.totalValue}</p>
               </div>
@@ -203,7 +203,7 @@ export function LendingMarket() {
                       whileHover={{ y: -2 }}
                     >
                       <div className="flex items-center gap-2 mb-3">
-                        <Icon className="w-4 h-4 text-purple-400" />
+                        <Icon className="w-4 h-4 text-white/60" />
                         <p className="text-white/60 text-xs font-medium">{metric.label}</p>
                       </div>
                       <p className="text-xl md:text-2xl font-bold text-white">{metric.value}</p>
@@ -216,11 +216,11 @@ export function LendingMarket() {
               <div className="mb-8">
                 <div className="flex items-center justify-between mb-3">
                   <p className="text-white/70 font-medium">Pool Utilization</p>
-                  <span className="text-purple-300 font-semibold">{selectedPool_.utilizationRate}%</span>
+                  <span className="text-white/80 font-semibold">{selectedPool_.utilizationRate}%</span>
                 </div>
                 <div className="w-full h-3 bg-white/10 rounded-full overflow-hidden">
                   <motion.div
-                    className="h-full bg-gradient-to-r from-purple-400 to-pink-400"
+                    className="h-full bg-gradient-to-r from-white/50 to-white/25"
                     initial={{ width: 0 }}
                     animate={{ width: `${selectedPool_.utilizationRate}%` }}
                     transition={{ duration: 0.8, ease: 'easeOut' }}

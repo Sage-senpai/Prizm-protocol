@@ -56,8 +56,8 @@ export function StatsCounter({ end, label, suffix = '', duration = 2 }: CounterP
       transition={{ duration: 0.6 }}
       className="text-center"
     >
-      <p className="text-white/50 text-sm font-medium mb-2">{label}</p>
-      <p className="text-4xl md:text-5xl font-bold gradient-text">
+      <p className="text-white/50 text-xs uppercase tracking-[0.2em] mb-2">{label}</p>
+      <p className="text-4xl md:text-5xl font-semibold text-white">
         {count}{suffix}
       </p>
     </motion.div>

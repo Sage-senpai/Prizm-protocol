@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { TrendingUp, Calendar, Download, Info } from 'lucide-react';
+import { TrendingUp, Calendar, Download, Info, BarChart3, LineChart } from 'lucide-react';
 
 export function Analytics() {
   const timeRanges = ['24h', '7d', '30d', '90d', '1y'];
@@ -73,10 +73,10 @@ export function Analytics() {
           viewport={{ once: true }}
         >
           {[
-            { label: 'Total Earned', value: '$2,190', change: '+12.5%', color: 'from-green-400 to-emerald-400' },
-            { label: 'This Month', value: '$1,240', change: '+8.2%', color: 'from-blue-400 to-cyan-400' },
-            { label: 'Average APR', value: '9.85%', change: '+0.3%', color: 'from-purple-400 to-pink-400' },
-            { label: 'Portfolio Value', value: '$65,420', change: '+5.1%', color: 'from-orange-400 to-red-400' },
+            { label: 'Total Earned', value: '$2,190', change: '+12.5%', tone: 'text-white/80' },
+            { label: 'This Month', value: '$1,240', change: '+8.2%', tone: 'text-white/80' },
+            { label: 'Average APR', value: '9.85%', change: '+0.3%', tone: 'text-white/70' },
+            { label: 'Portfolio Value', value: '$65,420', change: '+5.1%', tone: 'text-white/80' },
           ].map((metric, i) => (
             <motion.div
               key={i}
@@ -87,11 +87,11 @@ export function Analytics() {
               <div className="flex items-end justify-between">
                 <div>
                   <p className="text-3xl font-bold text-white mb-2">{metric.value}</p>
-                  <span className={`inline-block px-3 py-1 rounded-lg text-xs font-semibold bg-gradient-to-r ${metric.color} bg-clip-text text-transparent`}>
+                  <span className={`inline-flex items-center px-3 py-1 rounded-lg text-xs font-semibold bg-white/10 border border-white/10 ${metric.tone}`}>
                     {metric.change}
                   </span>
                 </div>
-                <TrendingUp className="w-5 h-5 text-purple-400/50 group-hover:text-purple-400 transition-colors" />
+                <TrendingUp className="w-5 h-5 text-white/40 group-hover:text-white/70 transition-colors" />
               </div>
             </motion.div>
           ))}
@@ -119,8 +119,8 @@ export function Analytics() {
                       key={range}
                       className={`px-3 py-1 rounded-lg text-sm font-medium transition-all ${
                         range === selectedRange
-                          ? 'bg-gradient-to-r from-purple-400 to-pink-400 text-white'
-                          : 'bg-white/5 text-white/60 hover:bg-white/10'
+                          ? 'bg-white/15 text-white border border-white/20'
+                          : 'bg-white/5 text-white/60 hover:bg-white/10 border border-transparent'
                       }`}
                     >
                       {range}
@@ -145,13 +145,13 @@ export function Analytics() {
                     >
                       <div className="w-full flex items-end gap-1 h-64">
                         <motion.div
-                          className="flex-1 rounded-t-lg bg-gradient-to-t from-purple-400 to-purple-300 group-hover:from-purple-500 group-hover:to-purple-400 transition-all"
+                          className="flex-1 rounded-t-lg bg-gradient-to-t from-white/35 to-white/15 group-hover:from-white/50 group-hover:to-white/25 transition-all"
                           initial={{ height: 0 }}
                           whileInView={{ height: `${(data.earned / maxEarnings) * 100}%` }}
                           transition={{ delay: i * 0.1 + 0.3, duration: 0.6 }}
                         />
                         <motion.div
-                          className="flex-1 rounded-t-lg bg-gradient-to-t from-pink-400/60 to-pink-300/60 group-hover:from-pink-500/80 group-hover:to-pink-400/80 transition-all"
+                          className="flex-1 rounded-t-lg bg-gradient-to-t from-white/18 to-white/8 group-hover:from-white/30 group-hover:to-white/15 transition-all"
                           initial={{ height: 0 }}
                           whileInView={{ height: `${(data.pending / maxEarnings) * 100}%` }}
                           transition={{ delay: i * 0.1 + 0.4, duration: 0.6 }}
@@ -166,11 +166,11 @@ export function Analytics() {
               {/* Legend */}
               <div className="flex gap-6 pt-4 border-t border-white/10">
                 <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full bg-gradient-to-br from-purple-400 to-purple-300" />
+                  <div className="w-3 h-3 rounded-full bg-white/50" />
                   <span className="text-white/70 text-sm">Earned</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full bg-gradient-to-br from-pink-400 to-pink-300" />
+                  <div className="w-3 h-3 rounded-full bg-white/20" />
                   <span className="text-white/70 text-sm">Pending</span>
                 </div>
               </div>
@@ -198,7 +198,7 @@ export function Analytics() {
                       initial={{ rotate: -90 }}
                       animate={{ rotate: 0 }}
                       transition={{ duration: 1 }}
-                      style={{ transformOrigin: '50px 50px' }}
+                      className="svg-origin-center"
                     />
                     <motion.circle
                       cx="50"
@@ -212,7 +212,7 @@ export function Analytics() {
                       initial={{ rotate: -90 }}
                       animate={{ rotate: 0 }}
                       transition={{ duration: 1 }}
-                      style={{ transformOrigin: '50px 50px' }}
+                      className="svg-origin-center"
                     />
                     <motion.circle
                       cx="50"
@@ -226,20 +226,20 @@ export function Analytics() {
                       initial={{ rotate: -90 }}
                       animate={{ rotate: 0 }}
                       transition={{ duration: 1 }}
-                      style={{ transformOrigin: '50px 50px' }}
+                      className="svg-origin-center"
                     />
                     <defs>
                       <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#a855f7" />
-                        <stop offset="100%" stopColor="#ec4899" />
+                        <stop offset="0%" stopColor="#ffffff" />
+                        <stop offset="100%" stopColor="#cfcfcf" />
                       </linearGradient>
                       <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#06b6d4" />
-                        <stop offset="100%" stopColor="#3b82f6" />
+                        <stop offset="0%" stopColor="#b8b8b8" />
+                        <stop offset="100%" stopColor="#8a8a8a" />
                       </linearGradient>
                       <linearGradient id="gradient3" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#fbbf24" />
-                        <stop offset="100%" stopColor="#f97316" />
+                        <stop offset="0%" stopColor="#6f6f6f" />
+                        <stop offset="100%" stopColor="#4b4b4b" />
                       </linearGradient>
                     </defs>
                   </svg>
@@ -254,9 +254,9 @@ export function Analytics() {
 
               <div className="space-y-3">
                 {[
-                  { name: 'Real Estate', value: '45%', color: 'from-purple-400 to-pink-400' },
-                  { name: 'Trade Finance', value: '30%', color: 'from-blue-400 to-cyan-400' },
-                  { name: 'Other Assets', value: '25%', color: 'from-orange-400 to-red-400' },
+                  { name: 'Real Estate', value: '45%', color: 'bg-white/60' },
+                  { name: 'Trade Finance', value: '30%', color: 'bg-white/30' },
+                  { name: 'Other Assets', value: '25%', color: 'bg-white/20' },
                 ].map((item, i) => (
                   <motion.div
                     key={i}
@@ -264,7 +264,7 @@ export function Analytics() {
                     whileHover={{ x: 4 }}
                   >
                     <div className="flex items-center gap-3">
-                      <div className={`w-2 h-2 rounded-full bg-gradient-to-r ${item.color}`} />
+                      <div className={`w-2 h-2 rounded-full ${item.color}`} />
                       <span className="text-white/70 text-sm">{item.name}</span>
                     </div>
                     <span className="text-white font-semibold text-sm">{item.value}</span>
@@ -288,33 +288,38 @@ export function Analytics() {
               title: 'Risk Assessment',
               description: 'Your portfolio risk profile',
               metrics: ['Volatility: Low', 'Correlation: Optimized', 'Stress Test: Passed'],
-              icon: '📊',
+              icon: BarChart3,
             },
             {
               title: 'Projected Returns',
               description: 'Annual yield estimation',
               metrics: ['Conservative: 8.2%', 'Expected: 10.5%', 'Optimistic: 13.1%'],
-              icon: '📈',
+              icon: LineChart,
             },
-          ].map((card, i) => (
-            <motion.div key={i} variants={itemVariants} className="glass p-8">
-              <div className="flex items-start gap-4 mb-6">
-                <span className="text-3xl">{card.icon}</span>
-                <div>
-                  <h4 className="text-xl font-bold text-white">{card.title}</h4>
-                  <p className="text-white/60 text-sm">{card.description}</p>
-                </div>
-              </div>
-              <div className="space-y-3">
-                {card.metrics.map((metric, j) => (
-                  <div key={j} className="flex items-center justify-between p-3 bg-white/5 rounded-lg">
-                    <span className="text-white/70 text-sm">{metric.split(':')[0]}</span>
-                    <span className="text-white font-semibold">{metric.split(':')[1]}</span>
+          ].map((card, i) => {
+            const Icon = card.icon;
+            return (
+              <motion.div key={i} variants={itemVariants} className="glass p-8">
+                <div className="flex items-start gap-4 mb-6">
+                  <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center">
+                    <Icon className="w-6 h-6 text-white" />
                   </div>
-                ))}
-              </div>
-            </motion.div>
-          ))}
+                  <div>
+                    <h4 className="text-xl font-bold text-white">{card.title}</h4>
+                    <p className="text-white/60 text-sm">{card.description}</p>
+                  </div>
+                </div>
+                <div className="space-y-3">
+                  {card.metrics.map((metric, j) => (
+                    <div key={j} className="flex items-center justify-between p-3 bg-white/5 rounded-lg">
+                      <span className="text-white/70 text-sm">{metric.split(':')[0]}</span>
+                      <span className="text-white font-semibold">{metric.split(':')[1]}</span>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            );
+          })}
         </motion.div>
       </div>
     </section>

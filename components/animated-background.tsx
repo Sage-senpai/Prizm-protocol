@@ -1,80 +1,99 @@
 'use client';
 
+import { useEffect, useRef } from 'react';
+
+type Particle = {
+  x: number;
+  y: number;
+  radius: number;
+  alpha: number;
+  driftX: number;
+  driftY: number;
+  pulse: number;
+};
+
 export function AnimatedBackground() {
-  const nodes = [
-    'node-1',
-    'node-2',
-    'node-3',
-    'node-4',
-    'node-5',
-    'node-6',
-    'node-7',
-    'node-8',
-    'node-9',
-    'node-10',
-    'node-11',
-    'node-12',
-  ];
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const particles: Particle[] = [];
+    let animationFrame = 0;
+
+    const resize = () => {
+      const { innerWidth, innerHeight, devicePixelRatio } = window;
+      canvas.width = innerWidth * devicePixelRatio;
+      canvas.height = innerHeight * devicePixelRatio;
+      canvas.style.width = `${innerWidth}px`;
+      canvas.style.height = `${innerHeight}px`;
+      ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+
+      particles.length = 0;
+      const count = Math.min(60, Math.floor(innerWidth / 18));
+      for (let i = 0; i < count; i += 1) {
+        particles.push({
+          x: Math.random() * innerWidth,
+          y: Math.random() * innerHeight,
+          radius: 1 + Math.random() * 2.2,
+          alpha: 0.2 + Math.random() * 0.6,
+          driftX: (Math.random() - 0.5) * 0.3,
+          driftY: (Math.random() - 0.5) * 0.3,
+          pulse: Math.random() * Math.PI * 2,
+        });
+      }
+    };
+
+    const draw = () => {
+      const width = canvas.clientWidth;
+      const height = canvas.clientHeight;
+      ctx.clearRect(0, 0, width, height);
+
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.55)';
+      particles.forEach((particle) => {
+        particle.x += particle.driftX;
+        particle.y += particle.driftY;
+        particle.pulse += 0.02;
+
+        if (particle.x < -10) particle.x = width + 10;
+        if (particle.x > width + 10) particle.x = -10;
+        if (particle.y < -10) particle.y = height + 10;
+        if (particle.y > height + 10) particle.y = -10;
+
+        const pulse = 0.5 + Math.sin(particle.pulse) * 0.5;
+        ctx.globalAlpha = particle.alpha * pulse;
+        ctx.beginPath();
+        ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      ctx.globalAlpha = 1;
+      animationFrame = requestAnimationFrame(draw);
+    };
+
+    resize();
+    window.addEventListener('resize', resize);
+
+    if (!prefersReducedMotion) {
+      animationFrame = requestAnimationFrame(draw);
+    }
+
+    return () => {
+      window.removeEventListener('resize', resize);
+      if (animationFrame) cancelAnimationFrame(animationFrame);
+    };
+  }, []);
 
   return (
     <div className="fixed inset-0 -z-30 overflow-hidden">
-      {/* Main background */}
-      <div className="absolute inset-0 bg-black" />
-      
-      {/* Grid overlay */}
-      <div className="absolute inset-0 opacity-5 bg-grid" />
-
-      {/* Animated gradient orbs */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full opacity-10 blur-3xl bg-orb" />
-      <div className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full opacity-10 blur-3xl bg-orb bg-orb-2" />
-      
-      {/* Wireframe lightning nodes - animated */}
-      <div className="absolute inset-0">
-        {nodes.map((nodeClass) => (
-          <div
-            key={nodeClass}
-            className={`absolute w-1 h-1 rounded-full bg-white/70 animate-pulse ${nodeClass}`}
-          />
-        ))}
-      </div>
-
-      {/* Animated connecting lines (market trend effect) */}
-      <svg className="absolute inset-0 w-full h-full opacity-20 pointer-events-none">
-        <defs>
-          <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="rgba(255,255,255,0.8)" />
-            <stop offset="100%" stopColor="rgba(255,255,255,0.1)" />
-          </linearGradient>
-          <filter id="glow">
-            <feGaussianBlur stdDeviation="2" result="coloredBlur" />
-            <feMerge>
-              <feMergeNode in="coloredBlur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-        </defs>
-        
-        {/* Animated zigzag lines simulating market movement */}
-        <polyline
-          points="50,300 150,250 250,280 350,200 450,240 550,180 650,220 750,150 850,190 950,120"
-          fill="none"
-          stroke="url(#lineGradient)"
-          strokeWidth="2"
-          filter="url(#glow)"
-          className="zigzag-line"
-        />
-        <polyline
-          points="80,500 180,480 280,510 380,460 480,490 580,440 680,470 780,410 880,450 980,380"
-          fill="none"
-          stroke="url(#lineGradient)"
-          strokeWidth="1.5"
-          filter="url(#glow)"
-          className="zigzag-line zigzag-line-reverse"
-        />
-      </svg>
-
-      {/* Ambient noise texture */}
-      <div className="absolute inset-0 opacity-[0.03] mix-blend-overlay noise-bg" />
+      <div className="absolute inset-0 bg-background" />
+      <canvas ref={canvasRef} className="absolute inset-0 h-full w-full opacity-70" aria-hidden="true" />
+      <div className="absolute inset-0 opacity-[0.08] mix-blend-overlay bg-noise" />
     </div>
   );
 }

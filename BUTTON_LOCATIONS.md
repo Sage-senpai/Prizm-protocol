@@ -411,3 +411,7 @@ Everything is clickable and labeled. Just look for the purple buttons!
 📱 **Mobile Menu:** Click ☰ in top right
 
 That's all the buttons! 🎉
+
+
+
+

@@ -14,7 +14,7 @@ Landing Page (/)
     ↓
 Wallet Connection Modal
     ↓
-    ├─→ Select wallet provider (MetaMask, WalletConnect, Coinbase)
+    ├─→ Select wallet provider (Polkadot.js, Talisman, SubWallet, Nova, MetaMask)
     ├─→ Auto-redirects to /onboard after connection
     ↓
 Onboarding Page (/onboard) - 4 Steps
@@ -320,3 +320,7 @@ Authenticated User (3 Main Pages)
 - Responsive design works on all devices
 
 Enjoy exploring Prizm Protocol! 🚀
+
+
+
+

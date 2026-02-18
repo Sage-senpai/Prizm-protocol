@@ -64,9 +64,9 @@ export const vaults: Vault[] = [
       utilization: point.utilization + index * 2,
     })),
     composition: [
-      { name: 'Residential', value: 45, color: '#a855f7' },
-      { name: 'Commercial', value: 35, color: '#94a3b8' },
-      { name: 'Hospitality', value: 20, color: '#38bdf8' },
+      { name: 'Residential', value: 45, color: '#f5f5f5' },
+      { name: 'Commercial', value: 35, color: '#9ca3af' },
+      { name: 'Hospitality', value: 20, color: '#6b7280' },
     ],
   },
   {
@@ -92,9 +92,9 @@ export const vaults: Vault[] = [
       utilization: point.utilization + index,
     })),
     composition: [
-      { name: 'Short-term Invoices', value: 50, color: '#a855f7' },
-      { name: 'Shipping Receivables', value: 30, color: '#94a3b8' },
-      { name: 'Supplier Credit', value: 20, color: '#38bdf8' },
+      { name: 'Short-term Invoices', value: 50, color: '#f5f5f5' },
+      { name: 'Shipping Receivables', value: 30, color: '#9ca3af' },
+      { name: 'Supplier Credit', value: 20, color: '#6b7280' },
     ],
   },
   {
@@ -120,9 +120,9 @@ export const vaults: Vault[] = [
       utilization: point.utilization + index * 1.5,
     })),
     composition: [
-      { name: 'Metals', value: 55, color: '#a855f7' },
-      { name: 'Agriculture', value: 30, color: '#94a3b8' },
-      { name: 'Energy', value: 15, color: '#38bdf8' },
+      { name: 'Metals', value: 55, color: '#f5f5f5' },
+      { name: 'Agriculture', value: 30, color: '#9ca3af' },
+      { name: 'Energy', value: 15, color: '#6b7280' },
     ],
   },
   {
@@ -148,9 +148,9 @@ export const vaults: Vault[] = [
       utilization: point.utilization - index,
     })),
     composition: [
-      { name: 'Renewables', value: 40, color: '#a855f7' },
-      { name: 'Reforestation', value: 35, color: '#94a3b8' },
-      { name: 'Industrial', value: 25, color: '#38bdf8' },
+      { name: 'Renewables', value: 40, color: '#f5f5f5' },
+      { name: 'Reforestation', value: 35, color: '#9ca3af' },
+      { name: 'Industrial', value: 25, color: '#6b7280' },
     ],
   },
   {
@@ -176,9 +176,9 @@ export const vaults: Vault[] = [
       utilization: point.utilization - index * 2,
     })),
     composition: [
-      { name: '3 Month', value: 45, color: '#a855f7' },
-      { name: '6 Month', value: 35, color: '#94a3b8' },
-      { name: '12 Month', value: 20, color: '#38bdf8' },
+      { name: '3 Month', value: 45, color: '#f5f5f5' },
+      { name: '6 Month', value: 35, color: '#9ca3af' },
+      { name: '12 Month', value: 20, color: '#6b7280' },
     ],
   },
   {
@@ -204,9 +204,9 @@ export const vaults: Vault[] = [
       utilization: point.utilization + index * 1.2,
     })),
     composition: [
-      { name: 'Logistics', value: 35, color: '#a855f7' },
-      { name: 'Inventory', value: 35, color: '#94a3b8' },
-      { name: 'Receivables', value: 30, color: '#38bdf8' },
+      { name: 'Logistics', value: 35, color: '#f5f5f5' },
+      { name: 'Inventory', value: 35, color: '#9ca3af' },
+      { name: 'Receivables', value: 30, color: '#6b7280' },
     ],
   },
 ];

@@ -53,9 +53,13 @@ prizm/
 # Create .env.local
 cp .env.example .env.local
 
-# Add these if needed (currently using defaults)
-# NEXT_PUBLIC_API_URL=http://localhost:3000
-# NEXT_PUBLIC_CHAIN_ID=1
+# Polkadot + EVM defaults (override if needed)
+# NEXT_PUBLIC_POLKADOT_RPC_URL=wss://rpc.polkadot.io
+# NEXT_PUBLIC_POLKADOT_SS58_PREFIX=0
+# NEXT_PUBLIC_POLKADOT_TRANSFER_TO=
+# NEXT_PUBLIC_MOONBEAM_RPC_URL=https://rpc.api.moonbeam.network
+# NEXT_PUBLIC_MOONBEAM_CHAIN_ID=1284
+# NEXT_PUBLIC_EVM_LENDING_POOL_ADDRESS=
 ```
 
 ### Running Development Server
@@ -180,6 +184,17 @@ export default function MyPage() {
 }
 ```
 
+### Polkadot Integration
+
+Core chain helpers live in `lib/blockchain` and `lib/config`.
+
+```ts
+import { fetchChainInfo, fetchPolkadotLatestBlock } from '@/lib/blockchain/examples';
+
+const info = await fetchChainInfo();
+const latest = await fetchPolkadotLatestBlock();
+```
+
 ## Styling Guide
 
 ### Color System (CSS Variables)
@@ -202,7 +217,7 @@ Dark theme (applied):
 
 ### Typography
 
-Font family: Work Sans (Google Fonts)
+Font family: Space Grotesk + IBM Plex Sans (Google Fonts)
 
 ```css
 h1 { @apply text-4xl md:text-5xl lg:text-6xl font-bold; }
@@ -265,6 +280,14 @@ xl: 1280px    /* Desktops */
 - [ ] No console errors
 - [ ] No memory leaks
 
+### Continuous Integration
+
+GitHub Actions runs linting, type checks, tests, and builds on every push and PR.
+
+```
+.github/workflows/ci.yml
+```
+
 ### Browser DevTools Tips
 
 ```javascript
@@ -283,38 +306,17 @@ web-vital metrics
 
 ## Deployment
 
-### Vercel Deployment (Recommended)
+### Standalone Deployment
 
-**Prerequisites**:
-- Vercel account (free tier available)
-- GitHub repository
-- GitHub connected to Vercel
+Use any Node.js host or container runtime.
 
-**Deploy steps**:
+`ash
+# Build for production
+pnpm build
 
-1. **Connect Repository**
-   - Go to https://vercel.com/new
-   - Select "Import Git Repository"
-   - Choose your GitHub repo
-
-2. **Configure Project**
-   - Framework: Next.js
-   - Root Directory: ./
-   - Build Command: `pnpm build`
-   - Install Command: `pnpm install`
-
-3. **Environment Variables**
-   - (Currently none required for demo)
-
-4. **Deploy**
-   - Click "Deploy"
-   - Wait 2-3 minutes
-   - Get production URL
-
-5. **Domain Setup** (Optional)
-   - Add custom domain in Vercel dashboard
-   - Update DNS records
-   - Enable HTTPS (automatic)
+# Start the server
+pnpm start
+` 
 
 ### Docker Deployment
 
@@ -381,7 +383,7 @@ docker-compose up -d
 
 ### Security Checklist
 
-- [ ] HTTPS enabled (automatic on Vercel)
+- [ ] HTTPS enabled (handled by your host)
 - [ ] Environment variables secured (not in code)
 - [ ] Sensitive data in `.env` files only
 - [ ] Rate limiting on API (future)
@@ -392,7 +394,7 @@ docker-compose up -d
 
 ### Monitoring & Analytics
 
-**Vercel Analytics**:
+**Analytics**:
 - Built-in performance monitoring
 - Core Web Vitals tracking
 - Usage statistics
@@ -406,12 +408,12 @@ docker-compose up -d
 ### Scaling Strategy
 
 **Phase 1: Current (0-10k DAU)**
-- Vercel Hobby or Pro
+- Any Node.js host tier
 - No database needed
 - Mock data sufficient
 
 **Phase 2: Growth (10k-100k DAU)**
-- Vercel Scale plan
+- Scaled Node.js infrastructure
 - Database integration (PostgreSQL)
 - API layer with caching
 - CDN for assets
@@ -574,4 +576,9 @@ function isValidAddress(address: string): boolean {
 5. Open Pull Request
 
 See CONTRIBUTING.md for detailed guidelines.
+
+
+
+
+
 

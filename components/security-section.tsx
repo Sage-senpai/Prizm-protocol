@@ -37,12 +37,12 @@ export function SecuritySection() {
           transition={{ duration: 0.6 }}
           className="space-y-6"
         >
-          <div className="inline-flex items-center gap-2 glass px-4 py-2 text-sm text-white/80">
+          <div className="inline-flex items-center gap-2 glass px-4 py-2 text-xs uppercase tracking-[0.2em] text-white/70">
             <span className="w-2 h-2 rounded-full bg-white/70" />
             Security first, always
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-white">
-            Security Built For <span className="gradient-text">RWA Lending</span>
+          <h2 className="text-4xl md:text-5xl font-semibold text-white">
+            Security Built For RWA Lending
           </h2>
           <p className="text-white/70 text-lg">
             Prizm blends on-chain transparency with institution-grade safeguards to keep collateral safe, liquidations fair, and borrowers protected.

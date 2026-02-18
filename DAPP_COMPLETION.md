@@ -1,7 +1,7 @@
 # Prizm Protocol - Complete DApp Implementation
 
 ## Overview
-A production-ready DeFi lending platform built with Next.js 14, featuring a sybil-resistant RWA collateralized lending system with Proof of Personhood (PoP) verification.
+A production-ready DeFi lending platform built with Next.js 16, featuring a sybil-resistant RWA collateralized lending system with Proof of Personhood (PoP) verification and Polkadot-first wallet support.
 
 ## Project Status: COMPLETE
 
@@ -88,12 +88,13 @@ All phases and features have been fully implemented and are ready for deployment
 
 #### Wallet Connection
 - Custom wallet context with persistent state
-- Three wallet provider options:
-  - MetaMask
-  - WalletConnect
-  - Coinbase Wallet
-- Mock connection flow with simulated delay
-- Automatic address generation for testing
+- Polkadot-first wallet options:
+  - Polkadot.js Extension
+  - Talisman
+  - SubWallet
+  - Nova
+- EVM support via MetaMask (Moonbeam-compatible)
+- Extension-based connection flow (no mock addresses)
 - Clean disconnect functionality
 
 #### Wallet Modal
@@ -112,6 +113,16 @@ All phases and features have been fully implemented and are ready for deployment
 
 ---
 
+### 2.5 Blockchain Integration (Polkadot)
+
+- Polkadot RPC connectivity via `@polkadot/api`
+- Extension-based signing and account discovery via `@polkadot/extension-dapp`
+- Reusable services under `lib/blockchain` for chain info, subscriptions, and sample calls
+- EVM connectivity (Moonbeam-compatible) via `ethers` for Solidity contracts
+- Live status panel on the dashboard (`components/polkadot-status.tsx`)
+
+---
+
 ### 3. Forms & Validation
 
 #### Form Validation System
@@ -122,7 +133,7 @@ All phases and features have been fully implemented and are ready for deployment
   - Number requirement
   - Special character requirement
 - Amount validation with min/max bounds
-- Wallet address validation
+- Wallet address validation (SS58 + EVM)
 - Generic form validation utility
 
 #### Input Components
@@ -178,12 +189,10 @@ All phases and features have been fully implemented and are ready for deployment
 - Tab transitions
 - Modal entrance/exit animations
 
-#### Custom Cursor
-- Gradient cursor with trailing glow effect
-- Follows mouse movement
-- Always visible (fixed: issue resolved)
-- Works across all backgrounds
-- Purple-to-pink gradient effect
+#### Standard Cursor
+- Custom cursor removed in favor of native system pointer
+- Predictable interaction behavior across all pages
+- No custom rendering or pointer tracking
 
 #### Animated Background
 - Canvas-based particle system
@@ -285,7 +294,7 @@ components/
   ├── footer.tsx
   ├── cta-section.tsx
   ├── wallet-modal.tsx
-  ├── custom-cursor.tsx
+  ├── how-to-bubble.tsx
   ├── animated-background.tsx
   └── scroll-indicator.tsx
 
@@ -301,24 +310,25 @@ lib/
 
 ## Tech Stack
 
-- **Framework**: Next.js 14 (App Router)
+- **Framework**: Next.js 16 (App Router)
 - **Language**: TypeScript (strict mode)
 - **Styling**: Tailwind CSS 3+
 - **Animations**: Framer Motion 11+
 - **Icons**: Lucide React
 - **Charts**: Recharts
 - **UI Components**: shadcn/ui
-- **Validation**: Custom utility functions
+- **Validation**: Custom utility functions + SS58/EVM address checks
 - **Notifications**: Custom toast system
+- **Blockchain**: polkadot{.js} API + extension dapp, ethers (EVM)
 
 ---
 
 ## Features Ready for Enhancement
 
-1. **Blockchain Integration**
+1. **On-chain Transactions**
    - Smart contract interactions for supply/borrow
-   - Real wallet connections
-   - Transaction signing
+   - Polkadot extrinsics + EVM contract writes
+   - Production-grade transaction signing flows
 
 2. **Database Integration**
    - User profile persistence
@@ -340,13 +350,11 @@ lib/
 
 ---
 
-## Cursor Issue Fixed
+## Cursor Change
 
-- Removed `hidden lg:block` classes from custom cursor component
-- Cursor now displays everywhere on the page
-- Mix-blend-mode set to 'screen' for visibility
-- Pointer-events: none to prevent interaction issues
-- Fully responsive across all screen sizes
+- Removed the custom cursor component
+- Default system cursor is used everywhere
+- Pointer behavior matches native browser expectations
 
 ---
 
@@ -404,10 +412,9 @@ Access: http://localhost:3000
 ## Deployment
 
 Ready for deployment to:
-- Vercel (recommended - optimized for Next.js)
+- Any Node.js host or container platform
 - AWS Amplify
 - Netlify
-- Any Node.js hosting
 
 ---
 
@@ -430,7 +437,7 @@ Ready for deployment to:
 1. Connect to blockchain (Web3.js or ethers.js)
 2. Integrate with smart contracts
 3. Add database for persistence
-4. Implement real wallet connections
+4. Implement production-grade contract execution
 5. Add price feed data
 6. Setup real APY calculations
 7. Implement user authentication
@@ -440,3 +447,8 @@ Ready for deployment to:
 
 **Status**: READY FOR PRODUCTION / BLOCKCHAIN INTEGRATION
 **Last Updated**: February 14, 2025
+
+
+
+
+

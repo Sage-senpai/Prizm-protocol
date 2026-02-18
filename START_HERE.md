@@ -125,7 +125,7 @@ Browse /markets to:
 ### In Onboarding (Step 1)
 ```
 1. Click "Connect Wallet" button
-2. Select wallet provider (MetaMask, WalletConnect, or Coinbase)
+2. Select wallet provider (Polkadot.js, Talisman, SubWallet, Nova, or MetaMask)
 3. Approve connection in your wallet
 4. Wallet connects automatically
 5. Click "Continue to Next Step"
@@ -235,7 +235,7 @@ From any page, you can reach:
 
 ### 🎯 Core Features
 - [x] Onboarding system (4 steps)
-- [x] Wallet connection (3 providers)
+- [x] Wallet connection (Polkadot + EVM providers)
 - [x] Profile creation
 - [x] Account verification
 - [x] Dashboard with stats
@@ -250,7 +250,7 @@ From any page, you can reach:
 - [x] Error handling
 - [x] Animations
 - [x] Responsive design
-- [x] Custom cursor
+- [x] Standard Cursor
 - [x] Smooth scrolling
 
 ### 📱 Responsive
@@ -361,3 +361,8 @@ You now have a complete, functional, multi-page DeFi platform with onboarding, p
 **Ready to build?** Integrate with real blockchain, smart contracts, and databases.
 
 **Questions?** Review PAGES_DIRECTORY.md for visual walkthroughs of each page.
+
+
+
+
+

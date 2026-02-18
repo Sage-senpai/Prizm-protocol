@@ -1,15 +1,30 @@
 import type { Metadata } from 'next'
-import { Work_Sans } from 'next/font/google'
-import { CustomCursor } from '@/components/custom-cursor'
+import { IBM_Plex_Mono, IBM_Plex_Sans, Space_Grotesk } from 'next/font/google'
 import { AnimatedBackground } from '@/components/animated-background'
 import { ThemeProvider } from '@/components/theme-provider'
 import { WalletProvider } from '@/context/wallet-context'
 import { WalletModal } from '@/components/wallet-modal'
 import { ToastProvider } from '@/context/toast-context'
+import { HowToBubble } from '@/components/how-to-bubble'
 
 import './globals.css'
 
-const workSans = Work_Sans({ subsets: ['latin'], variable: '--font-work-sans' })
+const spaceGrotesk = Space_Grotesk({
+  subsets: ['latin'],
+  variable: '--font-display',
+})
+
+const plexSans = IBM_Plex_Sans({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-sans',
+})
+
+const plexMono = IBM_Plex_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500'],
+  variable: '--font-mono',
+})
 
 export const metadata: Metadata = {
   title: 'Prizm - Next-Gen DeFi RWA Lending',
@@ -35,14 +50,18 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={workSans.variable} suppressHydrationWarning>
-      <body className="font-work-sans antialiased bg-background text-foreground">
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+    <html
+      lang="en"
+      className={`${spaceGrotesk.variable} ${plexSans.variable} ${plexMono.variable}`}
+      suppressHydrationWarning
+    >
+      <body className="font-sans antialiased bg-background text-foreground">
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
           <ToastProvider>
             <WalletProvider>
               <AnimatedBackground />
-              <CustomCursor />
               <WalletModal />
+              <HowToBubble />
               {children}
             </WalletProvider>
           </ToastProvider>

@@ -117,7 +117,7 @@ export default function VaultDetailPage() {
 
   const healthFactor = Number(((vault.maxLtv / Math.max(simulatedLtv, 1)) * 2.4).toFixed(2));
   const healthColor =
-    healthFactor >= 2.5 ? 'text-green-300' : healthFactor >= 1.8 ? 'text-yellow-300' : 'text-red-300';
+    healthFactor >= 2.5 ? 'text-white' : healthFactor >= 1.8 ? 'text-white/70' : 'text-white/50';
 
   return (
     <main className="relative min-h-screen">
@@ -155,9 +155,9 @@ export default function VaultDetailPage() {
           ) : (
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               {[
-                { label: 'Supply APY', value: `${vault.supplyApy.toFixed(1)}%`, tone: 'text-green-300' },
-                { label: 'Borrow APY', value: `${vault.borrowApy.toFixed(1)}%`, tone: 'text-orange-300' },
-                { label: 'Utilization', value: `${vault.utilization}%`, tone: 'text-blue-300' },
+                { label: 'Supply APY', value: `${vault.supplyApy.toFixed(1)}%`, tone: 'text-white' },
+                { label: 'Borrow APY', value: `${vault.borrowApy.toFixed(1)}%`, tone: 'text-white' },
+                { label: 'Utilization', value: `${vault.utilization}%`, tone: 'text-white/80' },
               ].map((metric) => (
                 <div key={metric.label} className="glass p-6 rounded-2xl">
                   <p className="text-white/60 text-sm">{metric.label}</p>
@@ -248,7 +248,7 @@ export default function VaultDetailPage() {
                                   className="glass-input w-full px-4 py-3 text-white placeholder-white/50"
                                 />
                               </FormControl>
-                              <FormMessage className="text-sm text-red-300" />
+                              <FormMessage className="text-sm text-white/60" />
                             </FormItem>
                           )}
                         />
@@ -280,7 +280,7 @@ export default function VaultDetailPage() {
                                   className="glass-input w-full px-4 py-3 text-white placeholder-white/50"
                                 />
                               </FormControl>
-                              <FormMessage className="text-sm text-red-300" />
+                              <FormMessage className="text-sm text-white/60" />
                             </FormItem>
                           )}
                         />
@@ -307,20 +307,20 @@ export default function VaultDetailPage() {
                       <AreaChart data={vault.history}>
                         <defs>
                           <linearGradient id="supplyGradient" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stopColor="#a855f7" stopOpacity={0.7} />
-                            <stop offset="95%" stopColor="#a855f7" stopOpacity={0.1} />
+                            <stop offset="5%" stopColor="#ffffff" stopOpacity={0.6} />
+                            <stop offset="95%" stopColor="#ffffff" stopOpacity={0.08} />
                           </linearGradient>
                           <linearGradient id="borrowGradient" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stopColor="#38bdf8" stopOpacity={0.7} />
-                            <stop offset="95%" stopColor="#38bdf8" stopOpacity={0.1} />
+                            <stop offset="5%" stopColor="#ffffff" stopOpacity={0.45} />
+                            <stop offset="95%" stopColor="#ffffff" stopOpacity={0.05} />
                           </linearGradient>
                         </defs>
                         <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
                         <XAxis dataKey="month" stroke="rgba(255,255,255,0.5)" />
                         <YAxis stroke="rgba(255,255,255,0.5)" />
                         <Tooltip content={<ChartTooltip />} />
-                        <Area type="monotone" dataKey="supplyApy" stroke="#a855f7" fill="url(#supplyGradient)" />
-                        <Area type="monotone" dataKey="borrowApy" stroke="#38bdf8" fill="url(#borrowGradient)" />
+                        <Area type="monotone" dataKey="supplyApy" stroke="#ffffff" fill="url(#supplyGradient)" />
+                        <Area type="monotone" dataKey="borrowApy" stroke="#d4d4d4" fill="url(#borrowGradient)" />
                       </AreaChart>
                     </ResponsiveContainer>
                   </div>
@@ -363,7 +363,7 @@ export default function VaultDetailPage() {
                       <XAxis dataKey="month" stroke="rgba(255,255,255,0.5)" />
                       <YAxis stroke="rgba(255,255,255,0.5)" />
                       <Tooltip content={<ChartTooltip />} />
-                      <Line type="monotone" dataKey="utilization" stroke="#ec4899" strokeWidth={2} dot={false} />
+                      <Line type="monotone" dataKey="utilization" stroke="#ffffff" strokeWidth={2} dot={false} />
                     </LineChart>
                   </ResponsiveContainer>
                 </div>

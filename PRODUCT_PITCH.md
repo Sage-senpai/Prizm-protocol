@@ -86,7 +86,7 @@ Prizm offers:
 ## Product Features
 
 ### Phase 1: MVP (Current)
-- ✓ Wallet integration (MetaMask, WalletConnect, Coinbase)
+- ✓ Wallet integration (Polkadot.js, Talisman, SubWallet, Nova, MetaMask)
 - ✓ 6 RWA asset pools (Real Estate, Trade Finance, Supply Chain, Renewables)
 - ✓ Dashboard with portfolio tracking
 - ✓ Proof-of-Person verification
@@ -359,4 +359,8 @@ We're seeking partners who share our vision of democratizing institutional finan
 **Contact**: contact@prizm.finance
 **Website**: https://prizm.finance
 **Demo**: [Live Platform]
+
+
+
+
 

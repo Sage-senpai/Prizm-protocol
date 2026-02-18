@@ -1,15 +1,15 @@
 # Prizm Protocol - Next-Gen DeFi RWA Lending Platform
 
-A modern, fully-animated iOS 26 glassmorphic DeFi lending platform showcasing real-world asset (RWA) integration with institutional-grade transparency and risk management.
+A modern, monochrome, minimalist DeFi lending platform showcasing real-world asset (RWA) integration with institutional-grade transparency, Polkadot-first wallet support, and risk management.
 
 ## Features
 
-### 🎨 Design System
-- **iOS 26 Glassmorphism**: Frosted glass effects with backdrop blur and sophisticated layering
-- **Gradient Color Palette**: Purple, pink, blue, and cyan gradients throughout
-- **Smooth Animations**: Framer Motion powered interactions on all components
+### Design System
+- **Monochrome Glassmorphism**: Frosted glass effects with subtle depth and blur
+- **Neutral Palette**: Black, white, and gray tones with restrained highlights
+- **Smooth Animations**: Framer Motion powered interactions on key components
 - **Mobile Responsive**: Fully responsive across all device sizes
-- **Dark Theme**: Enterprise-grade dark interface with optimized contrast
+- **Dark Theme**: Primary near-black interface with high-contrast typography
 
 ### 🏗️ Architecture
 
@@ -28,45 +28,48 @@ A modern, fully-animated iOS 26 glassmorphic DeFi lending platform showcasing re
 7. **Call-to-Action**: Conversion-focused section with key benefits
 8. **Footer**: Complete with links, social icons, and newsletter signup
 
-### 🎭 Animation Details
-- **Page Load**: Staggered animations on all sections with ease-out timing
+### Animation Details
+- **Page Load**: Staggered animations on key sections with ease-out timing
 - **Scroll Triggers**: Elements animate into view as user scrolls using `whileInView`
-- **Hover States**: Smooth scale and color transitions on interactive elements
-- **Background Effects**: Animated gradient orbs that float and pulse
-- **Micro-interactions**: Button animations, number counters, and chart fills
+- **Hover States**: Subtle scale and opacity transitions on interactive elements
+- **Background Effects**: Canvas-based particles with soft pulsing motion
+- **Micro-interactions**: Button feedback, number counters, and chart fills
 
-### 🛠️ Tech Stack
-- **Next.js 16**: Latest app router with React 19.2.3
+### Tech Stack
+- **Next.js 16**: App Router with React 19.2.3
 - **Tailwind CSS**: Utility-first styling with custom animations
 - **Framer Motion**: Industry-leading animation library
-- **Lucide Icons**: Beautiful SVG icons throughout
+- **Polkadot.js**: RPC + extension wallet integration
+- **ethers**: EVM connectivity (Moonbeam-compatible)
 - **TypeScript**: Full type safety
 
 ## Components
 
 ```
 components/
-├── navigation.tsx          # Fixed header with mobile menu
-├── hero.tsx               # Full-screen hero with stats
-├── features.tsx           # 8 feature cards
-├── phases.tsx             # 3-phase roadmap
-├── asset-pool.tsx         # 4 asset pools display
-├── lending-market.tsx     # Interactive lending markets
-├── analytics.tsx          # Performance dashboard
-├── wallet.tsx             # Portfolio and transactions
-├── cta-section.tsx        # Call-to-action section
-├── footer.tsx             # Footer with links
-└── scroll-indicator.tsx   # Animated scroll hint
++-- navigation.tsx          # Fixed header with mobile menu
++-- hero.tsx               # Full-screen hero with stats
++-- features.tsx           # 8 feature cards
++-- phases.tsx             # 3-phase roadmap
++-- asset-pool.tsx         # 4 asset pools display
++-- lending-market.tsx     # Interactive lending markets
++-- analytics.tsx          # Performance dashboard
++-- wallet.tsx             # Portfolio and transactions
++-- cta-section.tsx        # Call-to-action section
++-- footer.tsx             # Footer with links
++-- how-to-bubble.tsx      # First-run guide bubble
++-- polkadot-status.tsx    # Polkadot + EVM status panel
++-- scroll-indicator.tsx   # Animated scroll hint
 ```
 
 ## Design Tokens
 
 ### Colors
-- **Primary**: Purple (280° 100% 65%)
-- **Secondary**: Pink (320° 100% 60%)
-- **Accent**: Cyan (250° 100% 70%)
-- **Background**: Deep Purple (270° 30% 8%)
-- **Surface**: (270° 20% 12%)
+- **Primary**: White (#FFFFFF)
+- **Secondary**: Off-white (#E6E6E6)
+- **Accent**: Graphite (#6B6B6B)
+- **Background**: Near-black (#0D0D0D)
+- **Surface**: Charcoal (#151515)
 
 ### Spacing
 - Uses Tailwind default scale (4px units)
@@ -74,7 +77,7 @@ components/
 - Padding/margin for layout
 
 ### Typography
-- **Sans Serif**: Geist font family (regular + semibold weights)
+- **Sans Serif**: Space Grotesk + IBM Plex Sans
 - **Sizes**: 
   - H1: 5xl-6xl
   - H2: 4xl-5xl
@@ -134,7 +137,7 @@ Open [http://localhost:3000](http://localhost:3000) to view.
 
 ## Deployment
 
-Deploy to Vercel with a single click. All components are optimized for Vercel's Edge Functions and serverless infrastructure.
+Deploy to any Node.js host or container environment. The app builds and runs without platform-specific bindings.
 
 ## Browser Support
 
@@ -148,3 +151,10 @@ Requires CSS backdrop-filter support for glassmorphism effects.
 ## License
 
 MIT License - see LICENSE file for details
+
+
+
+
+
+
+

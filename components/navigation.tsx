@@ -1,8 +1,7 @@
 'use client';
 
-import { Menu, Wallet, Sun, Moon, ShieldCheck, LogOut, LayoutDashboard, User } from 'lucide-react';
+import { Menu, Sun, Moon, ShieldCheck, LogOut, LayoutDashboard, User } from 'lucide-react';
 import { useState } from 'react';
-import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useWallet } from '@/context/wallet-context';
 import { useToast } from '@/context/toast-context';
@@ -19,28 +18,23 @@ export function Navigation() {
   const isDark = resolvedTheme === 'dark';
 
   const navItems = [
-    { label: 'Home', href: '/' },
+    { label: 'Overview', href: '/#overview' },
+    { label: 'Protocol', href: '/#protocol' },
     { label: 'Markets', href: '/markets' },
-    { label: 'About', href: '/about' },
     { label: 'FAQ', href: '/faq' },
   ];
 
   const truncatedAddress = address ? `${address.slice(0, 6)}...${address.slice(-4)}` : 'Wallet';
 
   return (
-    <nav className="fixed top-0 w-full z-50 pt-4 px-4">
+    <nav className="fixed top-0 w-full z-50 px-4 pt-4">
       <div className="max-w-7xl mx-auto">
-        <motion.div
-          className="glass px-6 py-4 flex items-center justify-between"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
+        <div className="glass px-6 py-3 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center border border-white/20">
-              <span className="text-black font-bold text-lg">P</span>
+            <div className="w-10 h-10 rounded-xl border border-white/15 bg-white/10 flex items-center justify-center">
+              <span className="text-white font-bold text-lg">P</span>
             </div>
-            <span className="font-bold text-xl text-white hidden sm:inline">Prizm</span>
+            <span className="font-semibold text-lg text-white hidden sm:inline">Prizm</span>
           </Link>
 
           <div className="hidden md:flex items-center gap-8">
@@ -48,7 +42,7 @@ export function Navigation() {
               <Link
                 key={item.label}
                 href={item.href}
-                className="text-white/70 hover:text-white transition-colors font-medium text-sm"
+                className="text-white/70 hover:text-white transition-colors text-sm font-medium"
               >
                 {item.label}
               </Link>
@@ -59,7 +53,7 @@ export function Navigation() {
             <button
               type="button"
               onClick={() => setTheme(isDark ? 'light' : 'dark')}
-              className="glass px-3 py-2 rounded-full text-white hover:bg-white/20 transition-all"
+              className="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-white hover:bg-white/10 transition-all"
               aria-label="Toggle theme"
             >
               {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
@@ -68,9 +62,9 @@ export function Navigation() {
             {isConnected ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <button className="glass px-3 py-2 rounded-full text-white flex items-center gap-2 hover:bg-white/20 transition-all">
+                  <button className="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-white flex items-center gap-2 hover:bg-white/10 transition-all">
                     <Avatar className="w-6 h-6">
-                      <AvatarFallback className="bg-white text-black text-xs">
+                      <AvatarFallback className="bg-white/90 text-black text-xs">
                         {address ? address.slice(2, 3).toUpperCase() : 'P'}
                       </AvatarFallback>
                     </Avatar>
@@ -104,7 +98,7 @@ export function Navigation() {
                       disconnectWallet();
                       showToast('Wallet disconnected.', 'info');
                     }}
-                    className="flex items-center gap-2 text-red-400 focus:text-red-400"
+                    className="flex items-center gap-2 text-white/70 focus:text-white"
                   >
                     <LogOut className="w-4 h-4" />
                     Disconnect
@@ -145,7 +139,7 @@ export function Navigation() {
                   <button
                     type="button"
                     onClick={() => setTheme(isDark ? 'light' : 'dark')}
-                    className="glass px-3 py-2 rounded-full text-white hover:bg-white/20 transition-all"
+                    className="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-white hover:bg-white/10 transition-all"
                     aria-label="Toggle theme"
                   >
                     {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
@@ -176,7 +170,7 @@ export function Navigation() {
                         setIsOpen(false);
                         showToast('Wallet disconnected.', 'info');
                       }}
-                      className="glass px-4 py-3 rounded-xl text-red-300 flex items-center gap-2"
+                      className="glass px-4 py-3 rounded-xl text-white/70 flex items-center gap-2"
                     >
                       <LogOut className="w-4 h-4" />
                       Disconnect
@@ -197,7 +191,7 @@ export function Navigation() {
               </div>
             </SheetContent>
           </Sheet>
-        </motion.div>
+        </div>
       </div>
     </nav>
   );

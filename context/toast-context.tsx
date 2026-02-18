@@ -53,26 +53,26 @@ function ToastContainer({ toasts, onRemove }: { toasts: Toast[]; onRemove: (id: 
   const getIcon = (type: ToastType) => {
     switch (type) {
       case 'success':
-        return <CheckCircle className="w-5 h-5 text-green-400" />;
+        return <CheckCircle className="w-5 h-5 text-white/80" />;
       case 'error':
-        return <AlertCircle className="w-5 h-5 text-red-400" />;
+        return <AlertCircle className="w-5 h-5 text-white/80" />;
       case 'warning':
-        return <AlertCircle className="w-5 h-5 text-yellow-400" />;
+        return <AlertCircle className="w-5 h-5 text-white/70" />;
       default:
-        return <Info className="w-5 h-5 text-blue-400" />;
+        return <Info className="w-5 h-5 text-white/70" />;
     }
   };
 
   const getBackground = (type: ToastType) => {
     switch (type) {
       case 'success':
-        return 'bg-green-400/20 border-green-400/30';
+        return 'bg-white/10 border-white/15';
       case 'error':
-        return 'bg-red-400/20 border-red-400/30';
+        return 'bg-white/10 border-white/15';
       case 'warning':
-        return 'bg-yellow-400/20 border-yellow-400/30';
+        return 'bg-white/10 border-white/10';
       default:
-        return 'bg-blue-400/20 border-blue-400/30';
+        return 'bg-white/10 border-white/10';
     }
   };
 

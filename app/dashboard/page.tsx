@@ -11,6 +11,8 @@ import { vaults } from '@/lib/vaults';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, PieChart, Pie, Cell } from 'recharts';
+import { Progress } from '@/components/ui/progress';
+import { PolkadotStatus } from '@/components/polkadot-status';
 
 type TooltipItem = {
   name?: string;
@@ -49,6 +51,8 @@ export default function DashboardPage() {
     borrowPowerUsed: 42,
   };
 
+  const healthScore = Math.min(100, Math.round((portfolio.healthFactor / 3.5) * 100));
+
   const growthData = [
     { month: 'Jan', value: 42 },
     { month: 'Feb', value: 48 },
@@ -69,16 +73,16 @@ export default function DashboardPage() {
   );
 
   const borrowRingData = [
-    { name: 'Used', value: portfolio.borrowPowerUsed, fill: '#a855f7' },
-    { name: 'Available', value: 100 - portfolio.borrowPowerUsed, fill: 'rgba(255,255,255,0.1)' },
+    { name: 'Used', value: portfolio.borrowPowerUsed, fill: '#ffffff' },
+    { name: 'Available', value: 100 - portfolio.borrowPowerUsed, fill: 'rgba(255,255,255,0.12)' },
   ];
 
   const healthTone =
     portfolio.healthFactor >= 2.5
-      ? 'text-green-300'
+      ? 'text-white'
       : portfolio.healthFactor >= 1.8
-        ? 'text-yellow-300'
-        : 'text-red-300';
+        ? 'text-white/70'
+        : 'text-white/50';
 
   return (
     <main className="relative min-h-screen">
@@ -104,9 +108,9 @@ export default function DashboardPage() {
                   <Skeleton key={index} className="h-28 w-full bg-white/10" />
                 ))
               : [
-                  { label: 'Total Supplied', value: `$${portfolio.totalSupplied.toLocaleString()}`, icon: ArrowUpRight, tone: 'text-green-300' },
-                  { label: 'Total Borrowed', value: `$${portfolio.totalBorrowed.toLocaleString()}`, icon: ArrowDownRight, tone: 'text-orange-300' },
-                  { label: 'Net APY', value: `${portfolio.netApy}%`, icon: TrendingUp, tone: 'text-blue-300' },
+                  { label: 'Total Supplied', value: `$${portfolio.totalSupplied.toLocaleString()}`, icon: ArrowUpRight, tone: 'text-white' },
+                  { label: 'Total Borrowed', value: `$${portfolio.totalBorrowed.toLocaleString()}`, icon: ArrowDownRight, tone: 'text-white' },
+                  { label: 'Net APY', value: `${portfolio.netApy}%`, icon: TrendingUp, tone: 'text-white/80' },
                   { label: 'Health Factor', value: portfolio.healthFactor.toFixed(2), icon: ShieldCheck, tone: healthTone },
                 ].map((metric) => {
                   const Icon = metric.icon;
@@ -132,20 +136,20 @@ export default function DashboardPage() {
                   <ResponsiveContainer width="100%" height="100%">
                     <AreaChart data={growthData}>
                       <defs>
-                        <linearGradient id="growthGradient" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="#a855f7" stopOpacity={0.6} />
-                          <stop offset="95%" stopColor="#a855f7" stopOpacity={0.1} />
-                        </linearGradient>
-                      </defs>
-                      <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
-                      <XAxis dataKey="month" stroke="rgba(255,255,255,0.5)" />
-                      <YAxis stroke="rgba(255,255,255,0.5)" />
-                      <Tooltip content={<ChartTooltip />} />
-                      <Area type="monotone" dataKey="value" stroke="#a855f7" fill="url(#growthGradient)" />
-                    </AreaChart>
-                  </ResponsiveContainer>
-                )}
-              </div>
+                          <linearGradient id="growthGradient" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="5%" stopColor="#ffffff" stopOpacity={0.6} />
+                            <stop offset="95%" stopColor="#ffffff" stopOpacity={0.08} />
+                          </linearGradient>
+                        </defs>
+                        <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
+                        <XAxis dataKey="month" stroke="rgba(255,255,255,0.5)" />
+                        <YAxis stroke="rgba(255,255,255,0.5)" />
+                        <Tooltip content={<ChartTooltip />} />
+                        <Area type="monotone" dataKey="value" stroke="#ffffff" fill="url(#growthGradient)" />
+                      </AreaChart>
+                    </ResponsiveContainer>
+                  )}
+                </div>
             </div>
 
             <div className="glass p-6 rounded-3xl">
@@ -202,7 +206,7 @@ export default function DashboardPage() {
                       <TableCell className="text-white font-semibold">{position.name}</TableCell>
                       <TableCell className="text-white/80">${position.supplied.toLocaleString()}</TableCell>
                       <TableCell className="text-white/80">${position.borrowed.toLocaleString()}</TableCell>
-                      <TableCell className="text-green-300">{position.supplyApy.toFixed(1)}%</TableCell>
+                      <TableCell className="text-white">{position.supplyApy.toFixed(1)}%</TableCell>
                       <TableCell className="text-right">
                         <Link href={`/vaults/${position.id}`} className="text-white/60 hover:text-white transition-colors">
                           Manage
@@ -250,17 +254,22 @@ export default function DashboardPage() {
                     <ShieldCheck className="w-4 h-4" />
                     PoP Status
                   </div>
-                  <span className="text-green-300 font-semibold">Verified</span>
+                  <span className="text-white font-semibold">Verified</span>
                 </div>
                 <div className="glass-dark p-4 rounded-xl">
                   <p className="text-white/60 text-sm mb-2">Risk Guidance</p>
                   <p className="text-white/80 text-sm">
                     Maintain a health factor above 1.8 to avoid liquidation risk.
                   </p>
+                  <div className="mt-3">
+                    <Progress value={healthScore} className="h-2" />
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+
+          <PolkadotStatus />
         </motion.div>
       </section>
 

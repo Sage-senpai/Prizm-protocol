@@ -43,13 +43,13 @@ export default function MarketsPage() {
   const getRiskColor = (risk: string) => {
     switch (risk) {
       case 'Very Low':
-        return 'text-green-300 bg-green-400/20';
+        return 'text-white/80 bg-white/10';
       case 'Low':
-        return 'text-emerald-300 bg-emerald-400/20';
+        return 'text-white/80 bg-white/10';
       case 'Medium':
-        return 'text-yellow-300 bg-yellow-400/20';
+        return 'text-white/70 bg-white/10';
       case 'High':
-        return 'text-red-300 bg-red-400/20';
+        return 'text-white/60 bg-white/10';
       default:
         return 'text-white/70 bg-white/10';
     }
@@ -133,8 +133,8 @@ export default function MarketsPage() {
                         </div>
                       </TableCell>
                       <TableCell className="text-white/70">{vault.collateralType}</TableCell>
-                      <TableCell className="text-green-300 font-semibold">{vault.supplyApy.toFixed(1)}%</TableCell>
-                      <TableCell className="text-orange-300 font-semibold">{vault.borrowApy.toFixed(1)}%</TableCell>
+                      <TableCell className="text-white font-semibold">{vault.supplyApy.toFixed(1)}%</TableCell>
+                      <TableCell className="text-white font-semibold">{vault.borrowApy.toFixed(1)}%</TableCell>
                       <TableCell className="text-white/70">{vault.utilization}%</TableCell>
                       <TableCell className="text-right text-white/80">
                         ${(vault.totalSupplied / 1_000_000).toFixed(0)}M
@@ -169,11 +169,11 @@ export default function MarketsPage() {
                     <div className="space-y-2 text-sm">
                       <div className="flex items-center justify-between">
                         <span className="text-white/60">Supply APY</span>
-                        <span className="text-green-300 font-semibold">{vault.supplyApy.toFixed(1)}%</span>
+                        <span className="text-white font-semibold">{vault.supplyApy.toFixed(1)}%</span>
                       </div>
                       <div className="flex items-center justify-between">
                         <span className="text-white/60">Borrow APY</span>
-                        <span className="text-orange-300 font-semibold">{vault.borrowApy.toFixed(1)}%</span>
+                        <span className="text-white font-semibold">{vault.borrowApy.toFixed(1)}%</span>
                       </div>
                       <div className="flex items-center justify-between">
                         <span className="text-white/60">Utilization</span>
@@ -190,6 +190,11 @@ export default function MarketsPage() {
                   </motion.div>
                 ))}
           </div>
+          {!loading && sortedVaults.length === 0 && (
+            <div className="glass p-10 rounded-3xl text-center text-white/70">
+              No vaults match your search criteria.
+            </div>
+          )}
         </motion.div>
       </section>
 

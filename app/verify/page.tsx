@@ -69,6 +69,7 @@ export default function VerificationPage() {
 
   const StepIcon = steps[step]?.icon || CheckCircle2;
   const progressWidths = ['w-1/3', 'w-2/3', 'w-full'];
+  const progressValue = Math.round(((step + 1) / steps.length) * 100);
 
   return (
     <main className="relative min-h-screen">
@@ -94,10 +95,10 @@ export default function VerificationPage() {
             <div className="glass p-6 rounded-3xl">
               <div className="flex items-center justify-between mb-3 text-sm text-white/60">
                 <span>Verification Progress</span>
-                <span>{(step + 1) * 33}%</span>
+                <span>{progressValue}%</span>
               </div>
               <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden">
-                <div className={`h-full bg-gradient-to-r from-purple-400 to-pink-400 ${progressWidths[step]}`} />
+                <div className={`h-full bg-white/50 ${progressWidths[step]}`} />
               </div>
             </div>
 
@@ -121,7 +122,7 @@ export default function VerificationPage() {
               <div className="space-y-4 mb-8">
                 {steps[step].details.map((detail) => (
                   <div key={detail} className="flex items-center gap-3 p-4 glass rounded-xl">
-                    <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-white/70 flex-shrink-0" />
                     <span className="text-white">{detail}</span>
                   </div>
                 ))}
@@ -173,7 +174,7 @@ export default function VerificationPage() {
               ))}
             </div>
 
-            <div className="w-24 h-24 rounded-full bg-gradient-to-r from-green-400 to-emerald-400 mx-auto flex items-center justify-center">
+            <div className="w-24 h-24 rounded-full border border-white/20 bg-white/10 mx-auto flex items-center justify-center">
               <CheckCircle2 className="w-12 h-12 text-white" />
             </div>
 
@@ -191,7 +192,13 @@ export default function VerificationPage() {
               </div>
               <div>
                 <label className="text-white/60 text-sm font-medium">Borrow Limit Unlocked</label>
-                <p className="mt-2 text-2xl font-bold text-green-300">$150,000</p>
+                <motion.p
+                  className="mt-2 text-2xl font-bold text-white"
+                  animate={{ scale: [1, 1.03, 1] }}
+                  transition={{ duration: 1.4, repeat: Infinity }}
+                >
+                  $150,000
+                </motion.p>
               </div>
               <div>
                 <label className="text-white/60 text-sm font-medium">Valid Until</label>

@@ -25,7 +25,7 @@ All these buttons go to onboarding:
 - "Start Earning Now" in CTA section
 
 ### Step 3: Complete Onboarding (4 Steps)
-1. Connect wallet (MetaMask, WalletConnect, or Coinbase)
+1. Connect wallet (Polkadot.js, Talisman, SubWallet, Nova, or MetaMask)
 2. Create profile (username, email, risk tolerance)
 3. Verify account (simulated KYC)
 4. Success! Auto-redirect to dashboard
@@ -92,7 +92,7 @@ Click "Browse Markets" to see:
 ✅ Profile management
 ✅ Mobile responsiveness
 ✅ Animations and transitions
-✅ Custom cursor (visible everywhere)
+✅ Standard cursor (native pointer)
 ✅ Toast notifications
 ✅ Form validation
 
@@ -106,7 +106,7 @@ Click "Browse Markets" to see:
 
 ### To Deploy
 1. Run: `npm run build`
-2. Deploy to Vercel via GitHub
+2. Deploy to your host or container platform
 3. Connect domain
 4. Set environment variables
 
@@ -181,4 +181,8 @@ Your DApp is now ready to use. Start with the home page (`/`), click any action 
 All pages are functional, animations are smooth, navigation is clear, and the app is fully responsive.
 
 **Happy building! 🚀**
+
+
+
+
 

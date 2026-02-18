@@ -1,3 +1,5 @@
+import { isAddress } from '@polkadot/util-crypto';
+
 export const validateEmail = (email: string): boolean => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
@@ -48,7 +50,10 @@ export const validateAmount = (amount: string, min = 0, max = Infinity): { valid
 
 export const validateWalletAddress = (address: string): boolean => {
   const hexRegex = /^0x[a-fA-F0-9]{40}$/;
-  return hexRegex.test(address);
+  if (hexRegex.test(address)) {
+    return true;
+  }
+  return isAddress(address);
 };
 
 export const validateForm = (

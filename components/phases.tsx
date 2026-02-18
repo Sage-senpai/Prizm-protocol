@@ -66,7 +66,7 @@ export function Phases() {
   };
 
   return (
-    <section id="how-it-works" className="py-20 px-4 relative overflow-hidden">
+    <section id="guide" className="py-20 px-4 relative overflow-hidden">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
         <motion.div
@@ -76,11 +76,11 @@ export function Phases() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            How It <span className="gradient-text">Works</span>
+          <h2 className="text-4xl md:text-5xl font-semibold text-white mb-4">
+            How It Works
           </h2>
           <p className="text-white/60 text-lg max-w-2xl mx-auto">
-            A three-step flow that keeps capital secure and borrowing fair for verified humans.
+            Three steps from collateral to verified borrowing, designed for clarity and stability.
           </p>
         </motion.div>
 
@@ -95,30 +95,24 @@ export function Phases() {
           {phases.map((phase, index) => {
             const Icon = phase.icon;
             return (
-              <motion.div
-                key={index}
-                variants={itemVariants}
-                className={`glass p-8 relative group ${
-                  phase.status === 'completed' ? 'border-purple-400/50' : ''
-                }`}
-              >
+              <motion.div key={index} variants={itemVariants} className="glass p-8 relative">
                 {/* Connection line */}
                 {index < phases.length - 1 && (
-                  <div className="hidden md:block absolute -right-3 top-1/2 w-6 h-0.5 bg-gradient-to-r from-purple-400 to-pink-400" />
+                  <div className="hidden md:block absolute -right-3 top-1/2 w-6 h-0.5 bg-white/20" />
                 )}
 
                 {/* Status Badge */}
                 <div className="flex items-center justify-between mb-6">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-400 to-pink-400 flex items-center justify-center">
-                    <span className="text-xl font-bold text-white">{phase.number}</span>
+                  <div className="w-12 h-12 rounded-full border border-white/15 bg-white/5 flex items-center justify-center">
+                    <span className="text-xl font-semibold text-white">{phase.number}</span>
                   </div>
                   <span
                     className={`px-3 py-1 rounded-full text-xs font-semibold ${
                       phase.status === 'completed'
-                        ? 'bg-green-500/20 text-green-300'
+                        ? 'bg-white/10 text-white/80'
                         : phase.status === 'active'
-                          ? 'bg-purple-500/20 text-purple-300 animate-pulse'
-                          : 'bg-gray-500/20 text-gray-300'
+                          ? 'bg-white/10 text-white'
+                          : 'bg-white/5 text-white/60'
                     }`}
                   >
                     {phase.status === 'completed'
@@ -129,22 +123,19 @@ export function Phases() {
                   </span>
                 </div>
 
-                <h3 className="text-2xl font-bold text-white mb-2">{phase.title}</h3>
-                <p className="text-purple-300 text-sm font-medium mb-4">{phase.date}</p>
+                <h3 className="text-2xl font-semibold text-white mb-2">{phase.title}</h3>
+                <p className="text-white/50 text-sm font-medium mb-4">{phase.date}</p>
                 <p className="text-white/70 mb-6">{phase.description}</p>
 
                 {/* Milestones */}
                 <div className="space-y-3 pt-6 border-t border-white/10">
                   {phase.milestones.map((milestone, i) => (
                     <div key={i} className="flex items-start gap-3">
-                      <div className="w-2 h-2 rounded-full bg-purple-400 mt-2 flex-shrink-0" />
+                      <div className="w-2 h-2 rounded-full bg-white/50 mt-2 flex-shrink-0" />
                       <span className="text-white/70 text-sm">{milestone}</span>
                     </div>
                   ))}
                 </div>
-
-                {/* Hover glow effect */}
-                <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-purple-500/0 to-pink-500/0 group-hover:from-purple-500/10 group-hover:to-pink-500/10 transition-all duration-300 pointer-events-none" />
               </motion.div>
             );
           })}

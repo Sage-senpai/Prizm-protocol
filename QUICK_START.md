@@ -31,11 +31,11 @@ Navigate to: `http://localhost:3000`
 1. Visit `http://localhost:3000`
 2. Scroll through all sections
 3. Observe animations and effects
-4. Notice the custom cursor with glow effect
+4. Notice the standard cursor behavior
 
 ### Feature 2: Connect Wallet
 1. Click "Connect Wallet" button in navbar
-2. Select a wallet provider (MetaMask, WalletConnect, or Coinbase)
+2. Select a wallet provider (Polkadot.js, Talisman, SubWallet, Nova, or MetaMask)
 3. See the connection animation
 4. Observe success toast notification
 5. Notice navbar updates with Dashboard and Profile links
@@ -122,21 +122,15 @@ Navigate to: `http://localhost:3000`
 
 ## Wallet Connection Testing
 
-### Mock Wallets Available
+### Supported Wallets
 
-1. **MetaMask**
-   - Icon: 🦊
-   - Mock Address: `0x742d35Cc6634C0532925a3b844Bc9e7595f7eaB`
+1. **Polkadot.js Extension**
+2. **Talisman**
+3. **SubWallet**
+4. **Nova**
+5. **MetaMask (EVM)**
 
-2. **WalletConnect**
-   - Icon: 📱
-   - Mock Address: `0x8ba1f109551bD432803012645Ac136ddd64DBA72`
-
-3. **Coinbase Wallet**
-   - Icon: 🌐
-   - Mock Address: `0x1234567890abcdef1234567890abcdef12345678`
-
-All wallets trigger a 1.5 second connection animation for testing purposes.
+These require the corresponding browser extensions to be installed.
 
 ---
 
@@ -195,7 +189,7 @@ npm run dev
 
 ## Performance Notes
 
-- Cursor is optimized with `pointer-events-none`
+- Standard cursor uses native browser behavior
 - Background animations use Canvas API for efficiency
 - All images are optimized
 - CSS is minified on build
@@ -244,3 +238,7 @@ For issues or questions:
 ---
 
 **Happy building!**
+
+
+
+

@@ -12,7 +12,7 @@ export function AssetPool() {
       tvl: '$450M',
       users: '2.3K',
       risk: 'Low',
-      color: 'from-blue-400 to-cyan-400',
+      color: 'from-white/20 to-white/5',
       image: '🏢',
     },
     {
@@ -22,7 +22,7 @@ export function AssetPool() {
       tvl: '$680M',
       users: '1.8K',
       risk: 'Medium',
-      color: 'from-purple-400 to-pink-400',
+      color: 'from-white/20 to-white/5',
       image: '📦',
     },
     {
@@ -32,7 +32,7 @@ export function AssetPool() {
       tvl: '$520M',
       users: '2.1K',
       risk: 'Low-Medium',
-      color: 'from-green-400 to-emerald-400',
+      color: 'from-white/20 to-white/5',
       image: '⛓️',
     },
     {
@@ -42,7 +42,7 @@ export function AssetPool() {
       tvl: '$340M',
       users: '1.5K',
       risk: 'Low',
-      color: 'from-yellow-400 to-orange-400',
+      color: 'from-white/20 to-white/5',
       image: '⚡',
     },
   ];
@@ -108,10 +108,10 @@ export function AssetPool() {
                     <div className="text-4xl mb-3">{asset.image}</div>
                     <div>
                       <h3 className="text-xl font-bold text-white">{asset.name}</h3>
-                      <p className="text-purple-300 text-sm">{asset.symbol}</p>
+                      <p className="text-white/60 text-sm">{asset.symbol}</p>
                     </div>
                   </div>
-                  <div className={`bg-gradient-to-br ${asset.color} text-white px-4 py-2 rounded-lg text-sm font-bold`}>
+                  <div className="bg-white/10 text-white px-4 py-2 rounded-lg text-sm font-semibold border border-white/10">
                     {asset.apr} APR
                   </div>
                 </div>
@@ -128,9 +128,15 @@ export function AssetPool() {
                   </div>
                   <div>
                     <p className="text-white/50 text-xs font-medium mb-2">Risk</p>
-                    <p className={`text-lg font-bold ${
-                      asset.risk === 'Low' ? 'text-green-400' : asset.risk === 'Medium' ? 'text-yellow-400' : 'text-orange-400'
-                    }`}>
+                    <p
+                      className={`text-lg font-bold ${
+                        asset.risk === 'Low'
+                          ? 'text-white'
+                          : asset.risk === 'Medium'
+                            ? 'text-white/80'
+                            : 'text-white/60'
+                      }`}
+                    >
                       {asset.risk}
                     </p>
                   </div>
@@ -139,15 +145,15 @@ export function AssetPool() {
                 {/* Features */}
                 <div className="pt-6 space-y-3">
                   <div className="flex items-center gap-3">
-                    <TrendingUp className="w-4 h-4 text-purple-400 flex-shrink-0" />
+                    <TrendingUp className="w-4 h-4 text-white/70 flex-shrink-0" />
                     <span className="text-white/70 text-sm">Stable yield generation</span>
                   </div>
                   <div className="flex items-center gap-3">
-                    <Lock className="w-4 h-4 text-purple-400 flex-shrink-0" />
+                    <Lock className="w-4 h-4 text-white/70 flex-shrink-0" />
                     <span className="text-white/70 text-sm">Collateral locked & audited</span>
                   </div>
                   <div className="flex items-center gap-3">
-                    <Shield className="w-4 h-4 text-purple-400 flex-shrink-0" />
+                    <Shield className="w-4 h-4 text-white/70 flex-shrink-0" />
                     <span className="text-white/70 text-sm">Insurance protection</span>
                   </div>
                 </div>

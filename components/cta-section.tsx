@@ -29,10 +29,6 @@ export function CTASection() {
   return (
     <section className="py-20 px-4 relative overflow-hidden">
       <div className="max-w-6xl mx-auto">
-        {/* Animated background elements */}
-        <div className="absolute top-0 left-0 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-0 w-72 h-72 bg-pink-500/10 rounded-full blur-3xl" />
-
         <motion.div
           className="relative glass p-12 md:p-16 lg:p-20 text-center"
           variants={containerVariants}
@@ -43,9 +39,9 @@ export function CTASection() {
           {/* Main heading */}
           <motion.h2
             variants={itemVariants}
-            className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6"
+            className="text-4xl md:text-5xl lg:text-6xl font-semibold text-white mb-6"
           >
-            Ready to Unlock <span className="gradient-text">Human-First Liquidity?</span>
+            Ready to unlock human-first liquidity?
           </motion.h2>
 
           {/* Subheading */}
@@ -85,7 +81,7 @@ export function CTASection() {
                   variants={itemVariants}
                   className="flex flex-col items-center gap-4 p-6 rounded-xl bg-white/5 border border-white/10"
                 >
-                  <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-purple-400 to-pink-400 flex items-center justify-center">
+                  <div className="w-12 h-12 rounded-lg border border-white/15 bg-white/5 flex items-center justify-center">
                     <Icon className="w-6 h-6 text-white" />
                   </div>
                   <h4 className="font-bold text-white">{benefit.title}</h4>
@@ -110,7 +106,7 @@ export function CTASection() {
             </button>
             <Link
               href="/markets"
-              className="glass px-8 py-4 text-white font-semibold rounded-full hover:bg-white/20 transition-all inline-flex items-center justify-center text-base"
+              className="button-secondary text-base font-semibold px-8 py-4"
             >
               Browse Markets
             </Link>
@@ -121,7 +117,7 @@ export function CTASection() {
             variants={itemVariants}
             className="mt-12 pt-12 border-t border-white/10"
           >
-            <p className="text-white/50 text-sm mb-6">Trusted by leading institutions and 48K+ users</p>
+            <p className="text-white/50 text-sm mb-6">Trusted by teams shipping on Polkadot</p>
             <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12">
               {['OpenZeppelin', 'Certora', 'Trail of Bits', 'CertiK'].map((auditor, i) => (
                 <motion.div

@@ -78,7 +78,7 @@ export default function ProfilePage() {
                 <h2 className="text-lg font-bold text-white">PoP Status</h2>
               </div>
               <p className="text-white/60 text-sm mb-2">Verification</p>
-              <p className={`font-semibold ${isVerified ? 'text-green-300' : 'text-yellow-300'}`}>
+              <p className={`font-semibold ${isVerified ? 'text-white' : 'text-white/60'}`}>
                 {isVerified ? 'Verified' : 'Pending'}
               </p>
             </div>
@@ -120,7 +120,7 @@ export default function ProfilePage() {
                             </SelectContent>
                           </Select>
                         </FormControl>
-                        <FormMessage className="text-sm text-red-300" />
+                        <FormMessage className="text-sm text-white/60" />
                       </FormItem>
                     )}
                   />

@@ -77,7 +77,7 @@ A fully-featured iOS 26 glassmorphic DeFi lending platform for real-world assets
 ## 🎨 Design System Implemented
 
 ### Typography
-- **Font Family**: Geist (via Google Fonts)
+- **Font Family**: Space Grotesk + IBM Plex Sans (via Google Fonts)
 - **Sizes**: H1 (4xl-5xl), H2 (3xl-4xl), Body (base)
 - **Font Weights**: Regular (400), Semibold (600), Bold (700)
 
@@ -137,7 +137,7 @@ components/
 │   ├── navigation.tsx          (Header + mobile menu)
 │   ├── hero.tsx                (Full-screen entry)
 │   ├── footer.tsx              (Footer with CTA)
-│   └── custom-cursor.tsx       (Custom cursor effect)
+│   └── how-to-bubble.tsx       (First-run guide bubble)
 │
 ├── Feature Sections
 │   ├── features.tsx            (6 features grid)
@@ -190,7 +190,7 @@ components/
 
 ## 🚀 Deployment Ready
 
-- Optimized for Vercel deployment
+- Optimized for standalone Node.js deployment
 - Edge Functions compatible
 - ISR (Incremental Static Regeneration) ready
 - Image optimization via Next.js
@@ -233,3 +233,8 @@ components/
 ## 📝 Notes
 
 All components use TypeScript for type safety. The design system is defined in tailwind.config.ts and globals.css for consistency. Animations are performant and follow best practices for web performance.
+
+
+
+
+

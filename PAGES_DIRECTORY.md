@@ -81,7 +81,7 @@
 - Animated background particles
 - Scroll animations for sections
 - "Start Onboarding" buttons (2 places)
-- Custom cursor effect
+- Standard cursor behavior
 - Smooth scrolling to sections
 
 **Key CTAs:**
@@ -687,7 +687,7 @@ Vault Details (/vaults/[id])
 - [x] Form validation
 - [x] Toast notifications
 - [x] Responsive design
-- [x] Custom cursor
+- [x] Standard Cursor
 - [x] Animated background
 - [x] Smooth scrolling
 - [x] Auto-redirect flows
@@ -726,3 +726,7 @@ Context:
 ```
 
 That's everything! All pages are live and interactive. 🎉
+
+
+
+

@@ -87,13 +87,19 @@ className="animate-blob"        {/* Organic blob morph */}
 # Development
 pnpm dev                # Start dev server (port 3000)
 pnpm build             # Build for production
+pnpm build:staging     # Build with staging env
+pnpm build:production  # Build with production env
 pnpm start             # Run production build
+pnpm start:staging     # Start with staging env
 pnpm type-check        # TypeScript validation
 pnpm format            # Format code (Prettier)
 pnpm lint              # Lint code (ESLint)
+pnpm test              # Run tests
+pnpm test:ci           # Run tests (CI)
 
 # Deployment
-vercel deploy          # Deploy to Vercel
+pnpm build            # Build for production
+pnpm start            # Start production server
 docker build -t prizm . # Build Docker image
 ```
 
@@ -180,7 +186,7 @@ components/animated-background.tsx  # Background effects
 - [ ] Test on mobile (Chrome DevTools)
 - [ ] Test on desktop (Chrome, Firefox, Safari)
 - [ ] Check Lighthouse score (95+)
-- [ ] Deploy to Vercel (1 click)
+- [ ] Deploy to your host (Node or container)
 - [ ] Set custom domain (optional)
 - [ ] Monitor analytics
 
@@ -227,7 +233,7 @@ components/animated-background.tsx  # Background effects
 
 ## 🚀 Next Steps
 
-1. **Deploy**: Push to Vercel (`vercel deploy`)
+1. **Deploy**: Build and run on your host (`pnpm build && pnpm start`)
 2. **Share**: Get user feedback
 3. **Integrate**: Add smart contracts
 4. **Scale**: Build backend API
@@ -240,4 +246,8 @@ components/animated-background.tsx  # Background effects
 **Status**: Production Ready ✅
 
 **Questions?** Check the full documentation or reach out to the team!
+
+
+
+
 
