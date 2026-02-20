@@ -10,10 +10,25 @@ type HeaderLike = {
 let apiPromise: ApiPromise | null = null;
 let provider: WsProvider | null = null;
 
+/** Reject after `ms` milliseconds with a descriptive error. */
+function wsTimeout(ms: number, label: string) {
+  return new Promise<never>((_, reject) =>
+    setTimeout(() => reject(new Error(`${label} timed out after ${ms / 1000}s`)), ms),
+  );
+}
+
 export async function getPolkadotApi(endpoint = appConfig.polkadot.rpcUrl) {
-  if (apiPromise) return apiPromise;
-  provider = new WsProvider(endpoint);
-  apiPromise = await ApiPromise.create({ provider });
+  if (apiPromise?.isConnected) return apiPromise;
+
+  provider = new WsProvider(endpoint, 2_500); // 2.5 s reconnect interval
+  const api = await ApiPromise.create({ provider, throwOnConnect: false });
+
+  // Enforce a 12-second ceiling so a dead RPC never hangs the UI indefinitely
+  apiPromise = await Promise.race([
+    api.isReady,
+    wsTimeout(12_000, `Polkadot API (${endpoint})`),
+  ]);
+
   return apiPromise;
 }
 

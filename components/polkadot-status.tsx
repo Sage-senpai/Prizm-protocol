@@ -33,6 +33,11 @@ export function PolkadotStatus() {
     let unsubscribe: (() => void) | undefined;
     let active = true;
 
+    // Fallback: stop the spinner after 15 s even if WebSocket never connects
+    const fallbackTimer = setTimeout(() => {
+      if (active) setLoading(false);
+    }, 15_000);
+
     const load = async () => {
       try {
         const [info, latest, evm] = await Promise.all([
@@ -47,7 +52,7 @@ export function PolkadotStatus() {
         setEvmInfo(evm);
 
         unsubscribe = await subscribePolkadotFinalizedBlocks((block) => {
-          setFinalizedBlock(block);
+          if (active) setFinalizedBlock(block);
         });
       } catch (error) {
         console.error('Chain status error', error);
@@ -60,6 +65,7 @@ export function PolkadotStatus() {
 
     return () => {
       active = false;
+      clearTimeout(fallbackTimer);
       if (unsubscribe) unsubscribe();
     };
   }, []);

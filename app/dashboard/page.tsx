@@ -1,18 +1,30 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { Navigation } from '@/components/navigation';
 import { Footer } from '@/components/footer';
-import { ArrowDownRight, ArrowUpRight, TrendingUp, ShieldCheck, Wallet } from 'lucide-react';
+import { ArrowDownRight, ArrowUpRight, TrendingUp, ShieldCheck, Wallet, Droplets, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { useProtectedRoute } from '@/hooks/use-protected-route';
+import { useWallet } from '@/context/wallet-context';
+import { useToast } from '@/context/toast-context';
 import { vaults } from '@/lib/vaults';
+import { appConfig } from '@/lib/config';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, PieChart, Pie, Cell } from 'recharts';
 import { Progress } from '@/components/ui/progress';
-import { PolkadotStatus } from '@/components/polkadot-status';
+import dynamic from 'next/dynamic';
+import { claimRwaFaucet, claimUsdcFaucet, getTokenBalances, switchToMoonbase } from '@/lib/blockchain/contracts';
+
+// Lazy-load: pulls in @polkadot/api (≥3 MB wasm) and opens a WebSocket on mount.
+// Keeping it out of the initial bundle halves dashboard load time.
+const PolkadotStatus = dynamic(
+  () => import('@/components/polkadot-status').then((m) => ({ default: m.PolkadotStatus })),
+  { ssr: false, loading: () => <div className="glass p-6 rounded-3xl h-32 animate-pulse" /> },
+);
+import { TIER_LABELS, TIER_BORROW_CAPS } from '@/lib/blockchain/pop';
 
 type TooltipItem = {
   name?: string;
@@ -36,12 +48,46 @@ function ChartTooltip({ active, payload, label }: { active?: boolean; payload?: 
 
 export default function DashboardPage() {
   useProtectedRoute();
+  const { address, walletNamespace, popTier, isVerified } = useWallet();
+  const { showToast } = useToast();
   const [loading, setLoading] = useState(true);
+  const [balances, setBalances] = useState<{ rwa: string; usdc: string } | null>(null);
+  const [faucetLoading, setFaucetLoading] = useState<'rwa' | 'usdc' | null>(null);
 
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 700);
     return () => clearTimeout(timer);
   }, []);
+
+  // Fetch token balances when MetaMask is connected and contracts are deployed
+  const fetchBalances = useCallback(async () => {
+    if (walletNamespace !== 'evm' || !address || !appConfig.contractsDeployed) return;
+    try {
+      const b = await getTokenBalances(address);
+      setBalances({ rwa: Number(b.rwa).toFixed(2), usdc: Number(b.usdc).toFixed(2) });
+    } catch {
+      // silently ignore – RPC may not be available
+    }
+  }, [address, walletNamespace]);
+
+  useEffect(() => { fetchBalances(); }, [fetchBalances]);
+
+  const handleFaucet = async (token: 'rwa' | 'usdc') => {
+    if (walletNamespace !== 'evm') {
+      showToast('Connect MetaMask to use the faucet.', 'warning'); return;
+    }
+    setFaucetLoading(token);
+    try {
+      await switchToMoonbase();
+      if (token === 'rwa') { await claimRwaFaucet(); showToast('Claimed 1 000 PRE tokens!', 'success'); }
+      else                 { await claimUsdcFaucet(); showToast('Claimed 10 000 USDC!', 'success'); }
+      fetchBalances();
+    } catch (err) {
+      showToast(err instanceof Error ? err.message : 'Faucet failed', 'error');
+    } finally {
+      setFaucetLoading(null);
+    }
+  };
 
   const portfolio = {
     totalSupplied: 87_500,
@@ -101,6 +147,71 @@ export default function DashboardPage() {
               Track your positions, borrow power, and health factor in real time.
             </p>
           </div>
+
+          {/* ── Testnet faucet + PoP status ─────────────────────────────── */}
+          {appConfig.contractsDeployed && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Faucet */}
+              <div className="glass p-5 rounded-3xl">
+                <div className="flex items-center gap-2 text-white/60 text-xs uppercase tracking-widest mb-3">
+                  <Droplets className="w-4 h-4" />
+                  Moonbase Alpha Faucet
+                </div>
+                <p className="text-white/50 text-xs mb-4">
+                  Claim testnet tokens to try supply &amp; borrow.
+                </p>
+                {balances && (
+                  <div className="glass-dark p-3 rounded-xl mb-3 grid grid-cols-2 gap-2 text-xs">
+                    <div><span className="text-white/40">PRE Balance</span><p className="text-white font-semibold">{balances.rwa}</p></div>
+                    <div><span className="text-white/40">USDC Balance</span><p className="text-white font-semibold">{balances.usdc}</p></div>
+                  </div>
+                )}
+                <div className="flex gap-2">
+                  <button onClick={() => handleFaucet('rwa')} disabled={!!faucetLoading}
+                    className="glass-button flex-1 text-sm py-2 disabled:opacity-50">
+                    {faucetLoading === 'rwa' ? <Loader2 className="w-4 h-4 animate-spin mx-auto" /> : 'Get PRE'}
+                  </button>
+                  <button onClick={() => handleFaucet('usdc')} disabled={!!faucetLoading}
+                    className="button-secondary flex-1 text-sm py-2 disabled:opacity-50">
+                    {faucetLoading === 'usdc' ? <Loader2 className="w-4 h-4 animate-spin mx-auto" /> : 'Get USDC'}
+                  </button>
+                </div>
+              </div>
+
+              {/* PoP status */}
+              <div className="glass p-5 rounded-3xl">
+                <div className="flex items-center gap-2 text-white/60 text-xs uppercase tracking-widest mb-3">
+                  <ShieldCheck className="w-4 h-4" />
+                  Proof of Personhood
+                </div>
+                {isVerified ? (
+                  <div className="space-y-2">
+                    <div className="glass-dark p-3 rounded-xl flex items-center justify-between">
+                      <span className="text-white/60 text-sm">Tier</span>
+                      <span className="text-white font-semibold">{TIER_LABELS[popTier]}</span>
+                    </div>
+                    <div className="glass-dark p-3 rounded-xl flex items-center justify-between">
+                      <span className="text-white/60 text-sm">Borrow Cap</span>
+                      <span className="text-white font-semibold">{TIER_BORROW_CAPS[popTier]}</span>
+                    </div>
+                    <div className="glass-dark p-3 rounded-xl flex items-center justify-between">
+                      <span className="text-white/60 text-sm">Multiplier</span>
+                      <span className="text-white font-semibold">{popTier === 1 ? '1.0×' : popTier === 2 ? '1.5×' : '2.0×'}</span>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="space-y-3">
+                    <p className="text-white/50 text-sm">
+                      Verify your Polkadot People Chain PoP to unlock borrowing and increase limits.
+                    </p>
+                    <Link href="/verify" className="glass-button block text-center text-sm">
+                      Verify PoP →
+                    </Link>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {loading

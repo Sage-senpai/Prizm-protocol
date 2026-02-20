@@ -8,8 +8,43 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: false,
   },
+
+  // Pin Turbopack root to this project dir — prevents it from picking up
+  // a stale package-lock.json in the user's home directory.
   turbopack: {
     root: __dirname,
+  },
+
+  // Transpile @polkadot/* so Next.js processes their ESM/CJS correctly on all platforms
+  transpilePackages: [
+    '@polkadot/api',
+    '@polkadot/util',
+    '@polkadot/util-crypto',
+    '@polkadot/extension-dapp',
+    '@polkadot/types',
+    '@polkadot/rpc-provider',
+  ],
+
+  webpack(config, { isServer }) {
+    // Enable async WebAssembly — required by @polkadot/util-crypto wasm binaries
+    config.experiments = { ...config.experiments, asyncWebAssembly: true };
+
+    // Polyfill / stub Node.js built-ins that @polkadot/* references but browsers lack
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        net: false,
+        tls: false,
+        crypto: false,
+        stream: false,
+        path: false,
+        os: false,
+        buffer: false,
+      };
+    }
+
+    return config;
   },
 };
 

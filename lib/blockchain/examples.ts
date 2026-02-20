@@ -1,4 +1,5 @@
 import { BN } from '@polkadot/util';
+import { type InterfaceAbi } from 'ethers';
 import { appConfig } from '@/lib/config';
 import { fetchChainInfo as fetchPolkadotChainInfo, getPolkadotApi, subscribeFinalizedHeads } from '@/lib/blockchain/polkadot';
 import { getPolkadotSigner } from '@/lib/blockchain/polkadot-wallet';
@@ -65,14 +66,14 @@ export async function fetchEvmChainData() {
   };
 }
 
-export async function submitEvmExampleTransaction(abi: any, method: string, args: any[]) {
-  if (!appConfig.evm.lendingPoolAddress) {
-    throw new Error('Missing NEXT_PUBLIC_EVM_LENDING_POOL_ADDRESS.');
+export async function submitEvmExampleTransaction(abi: InterfaceAbi, method: string, args: unknown[]) {
+  if (!appConfig.contracts.rwaVault) {
+    throw new Error('Contract addresses not configured. Deploy contracts first.');
   }
 
   const { signer } = await connectEvmWallet();
-  const contract = getEvmContract(appConfig.evm.lendingPoolAddress, abi, signer);
+  const contract = getEvmContract(appConfig.contracts.rwaVault, abi, signer);
 
-  const tx = await contract[method](...args);
-  return tx.hash as string;
+  const tx = await (contract[method as keyof typeof contract] as (...a: unknown[]) => Promise<{ hash: string }>)(...args);
+  return tx.hash;
 }
