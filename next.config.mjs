@@ -26,6 +26,13 @@ const nextConfig = {
   ],
 
   webpack(config, { isServer }) {
+    // Disable webpack's filesystem pack cache.
+    // @polkadot/wasm-crypto embeds a multi-MB WASM binary; webpack tries to
+    // load the entire cache pack as a single ArrayBuffer which OOMs even with
+    // --max-old-space-size=4096 because ArrayBuffers use native heap, not V8.
+    // Memory cache still speeds up incremental rebuilds without the OOM risk.
+    config.cache = { type: 'memory' };
+
     // Enable async WebAssembly — required by @polkadot/util-crypto wasm binaries
     config.experiments = { ...config.experiments, asyncWebAssembly: true };
 

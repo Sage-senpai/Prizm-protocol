@@ -72,13 +72,9 @@ export default function OnboardPage() {
     }, 1500);
   };
 
-  const handleVerification = async () => {
-    setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-      setCurrentStep(4);
-      showToast('Account verified! You can now access all features.', 'success');
-    }, 2000);
+  const handleVerification = () => {
+    // Route to the real PoP verification page (Polkadot Ring VRF-based)
+    router.push('/verify');
   };
 
   const handleStartTrading = () => {
@@ -308,7 +304,7 @@ export default function OnboardPage() {
                 <div className="text-center space-y-2">
                   <h2 className="text-2xl font-bold text-white">Verify Your Account</h2>
                   <p className="text-white/60">
-                    Complete KYC verification to unlock full platform access and higher limits
+                    Complete Proof of Personhood via your Polkadot identity to unlock higher borrow limits
                   </p>
                 </div>
 
@@ -327,8 +323,8 @@ export default function OnboardPage() {
                       <span className="text-white font-semibold">2</span>
                     </div>
                     <div>
-                      <p className="text-white font-semibold">Identity Verification</p>
-                      <p className="text-white/50 text-sm">Verify your identity</p>
+                      <p className="text-white font-semibold">Connect Polkadot Wallet</p>
+                      <p className="text-white/50 text-sm">Link your Substrate identity</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
@@ -336,8 +332,8 @@ export default function OnboardPage() {
                       <span className="text-white font-semibold">3</span>
                     </div>
                     <div>
-                      <p className="text-white font-semibold">Account Review</p>
-                      <p className="text-white/50 text-sm">Final verification process</p>
+                      <p className="text-white font-semibold">PoP Attestation</p>
+                      <p className="text-white/50 text-sm">Submit on-chain Proof of Personhood</p>
                     </div>
                   </div>
                 </div>
@@ -349,17 +345,10 @@ export default function OnboardPage() {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  {isLoading ? (
-                    <>
-                      <span className="inline-block animate-spin mr-2">⚙️</span>
-                      Verifying Account...
-                    </>
-                  ) : (
-                    <>
-                      Start Verification
-                      <ArrowRight className="inline-block ml-2 w-5 h-5" />
-                    </>
-                  )}
+                  <>
+                    Go to PoP Verification
+                    <ArrowRight className="inline-block ml-2 w-5 h-5" />
+                  </>
                 </motion.button>
               </div>
             )}

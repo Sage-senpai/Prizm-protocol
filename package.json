@@ -10,7 +10,7 @@
     "start": "next start",
     "start:staging": "cross-env NEXT_PUBLIC_APP_ENV=staging next start",
     "lint": "next lint",
-    "type-check": "tsc --noEmit",
+    "type-check": "cross-env NODE_OPTIONS=--max-old-space-size=4096 tsc --noEmit",
     "test": "vitest",
     "test:ci": "vitest run",
     "compile": "hardhat compile",

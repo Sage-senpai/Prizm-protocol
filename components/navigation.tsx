@@ -1,8 +1,9 @@
 'use client';
 
 import { Menu, Sun, Moon, ShieldCheck, LogOut, LayoutDashboard, User } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useWallet } from '@/context/wallet-context';
 import { useToast } from '@/context/toast-context';
 import { useTheme } from 'next-themes';
@@ -12,10 +13,16 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const router = useRouter();
   const { isConnected, address, isVerified, setShowModal, disconnectWallet } = useWallet();
   const { showToast } = useToast();
   const { resolvedTheme, setTheme } = useTheme();
   const isDark = resolvedTheme === 'dark';
+
+  // next-themes resolvedTheme is undefined on the server — only render
+  // the theme-dependent icon after hydration to prevent mismatch.
+  useEffect(() => { setMounted(true); }, []);
 
   const navItems = [
     { label: 'Overview', href: '/#overview' },
@@ -56,7 +63,7 @@ export function Navigation() {
               className="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-white hover:bg-white/10 transition-all"
               aria-label="Toggle theme"
             >
-              {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+              {mounted && isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
             </button>
 
             {isConnected ? (
@@ -72,33 +79,27 @@ export function Navigation() {
                   </button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-56">
-                  <DropdownMenuItem asChild>
-                    <Link href="/dashboard" className="flex items-center gap-2">
-                      <LayoutDashboard className="w-4 h-4" />
-                      Dashboard
-                    </Link>
+                  <DropdownMenuItem onSelect={() => router.push('/dashboard')} className="flex items-center gap-2 cursor-pointer">
+                    <LayoutDashboard className="w-4 h-4" />
+                    Dashboard
                   </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link href="/profile" className="flex items-center gap-2">
-                      <User className="w-4 h-4" />
-                      Profile
-                    </Link>
+                  <DropdownMenuItem onSelect={() => router.push('/profile')} className="flex items-center gap-2 cursor-pointer">
+                    <User className="w-4 h-4" />
+                    Profile
                   </DropdownMenuItem>
                   {!isVerified && (
-                    <DropdownMenuItem asChild>
-                      <Link href="/verify" className="flex items-center gap-2">
-                        <ShieldCheck className="w-4 h-4" />
-                        Verify PoP
-                      </Link>
+                    <DropdownMenuItem onSelect={() => router.push('/verify')} className="flex items-center gap-2 cursor-pointer">
+                      <ShieldCheck className="w-4 h-4" />
+                      Verify PoP
                     </DropdownMenuItem>
                   )}
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
-                    onClick={() => {
+                    onSelect={() => {
                       disconnectWallet();
                       showToast('Wallet disconnected.', 'info');
                     }}
-                    className="flex items-center gap-2 text-white/70 focus:text-white"
+                    className="flex items-center gap-2 text-white/70 focus:text-white cursor-pointer"
                   >
                     <LogOut className="w-4 h-4" />
                     Disconnect
@@ -142,7 +143,7 @@ export function Navigation() {
                     className="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-white hover:bg-white/10 transition-all"
                     aria-label="Toggle theme"
                   >
-                    {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+                    {mounted && isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
                   </button>
                   <span className="text-white/70 text-sm">Theme</span>
                 </div>

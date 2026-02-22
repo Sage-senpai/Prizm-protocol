@@ -1,5 +1,7 @@
 require('@nomicfoundation/hardhat-toolbox');
+// Load .env first, then .env.local (Next.js convention) with override
 require('dotenv').config();
+require('dotenv').config({ path: '.env.local', override: true });
 
 // Fallback to Hardhat account #0 (well-known test key – safe for local dev only)
 // For Moonbase Alpha deployment you MUST set DEPLOYER_PRIVATE_KEY in .env.local

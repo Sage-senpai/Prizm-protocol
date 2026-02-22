@@ -232,6 +232,7 @@ export async function supplyCollateral(
 ): Promise<string> {
   const signer    = await getSigner();
   const vaultAddr = appConfig.contracts.rwaVault;
+  if (!vaultAddr) throw new Error('Contracts not deployed. Run pnpm deploy:moonbase first.');
   const amount    = parseEther(amountEther);
 
   // Approve
@@ -266,6 +267,7 @@ export async function repayUsdc(
 ): Promise<string> {
   const signer    = await getSigner();
   const vaultAddr = appConfig.contracts.rwaVault;
+  if (!vaultAddr) throw new Error('Contracts not deployed. Run pnpm deploy:moonbase first.');
   const amount    = parseUnits(amountUsdc, 6);
 
   // Approve USDC

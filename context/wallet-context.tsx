@@ -80,6 +80,13 @@ export function WalletProvider({ children }: { children: ReactNode }) {
   const isVerified      = popTier >= 1;
   const borrowMultiplier = tierToMultiplier(popTier);
 
+  // ── Pre-warm Polkadot WASM so enable() fires immediately on connect ────────
+  useEffect(() => {
+    import('@/lib/blockchain/polkadot-wallet')
+      .then(({ preloadPolkadotCrypto }) => preloadPolkadotCrypto())
+      .catch(() => {});
+  }, []);
+
   // ── Hydrate from localStorage ──────────────────────────────────────────────
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -115,25 +122,41 @@ export function WalletProvider({ children }: { children: ReactNode }) {
   // ── Actions ────────────────────────────────────────────────────────────────
 
   const connectWallet = useCallback(async (selectedWallet: WalletType) => {
+    // 55-second outer timeout:
+    //   40 s  first enable() attempt (user approves extension popup)
+    // + 10 s  crypto WASM init
+    // +  5 s  overhead
+    const timeout = new Promise<never>((_, reject) =>
+      setTimeout(
+        () => reject(new Error('Wallet connection timed out. Check that your extension is unlocked and try again.')),
+        55_000,
+      ),
+    );
+
     try {
-      if (selectedWallet === 'metamask') {
-        const { address: evmAddress } = await connectEvmWallet();
-        setAddress(evmAddress);
-        setWalletNamespace('evm');
-        setAccountSource(null);
-      } else {
-        const preferredSource = WALLET_SOURCES[selectedWallet] ?? undefined;
-        const accounts = await getPolkadotAccounts(APP_NAME, preferredSource);
-        if (!accounts.length) {
-          throw new Error('No Polkadot accounts found. Open your wallet and grant access.');
-        }
-        setAddress(accounts[0].address);
-        setWalletNamespace('polkadot');
-        setAccountSource(accounts[0].source ?? null);
-      }
-      setWalletType(selectedWallet);
-      setIsConnected(true);
-      setShowModal(false);
+      await Promise.race([
+        (async () => {
+          if (selectedWallet === 'metamask') {
+            const { address: evmAddress } = await connectEvmWallet();
+            setAddress(evmAddress);
+            setWalletNamespace('evm');
+            setAccountSource(null);
+          } else {
+            const preferredSource = WALLET_SOURCES[selectedWallet] ?? undefined;
+            const accounts = await getPolkadotAccounts(APP_NAME, preferredSource);
+            if (!accounts.length) {
+              throw new Error('No Polkadot accounts found. Open your wallet and grant access.');
+            }
+            setAddress(accounts[0].address);
+            setWalletNamespace('polkadot');
+            setAccountSource(accounts[0].source ?? null);
+          }
+          setWalletType(selectedWallet);
+          setIsConnected(true);
+          setShowModal(false);
+        })(),
+        timeout,
+      ]);
     } catch (error) {
       console.error('[WalletProvider] connectWallet failed:', error);
       throw error;
