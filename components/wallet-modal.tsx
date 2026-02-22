@@ -115,6 +115,18 @@ export function WalletModal() {
     // Installed → connect
     setConnectingId(provider.id);
     setConnectStatus('Waiting for extension approval\u2026');
+
+    // After ~6 s (first attempt over, retry starting) update the status
+    const retryTimer = setTimeout(
+      () => setConnectStatus('Waking up extension, retrying\u2026'),
+      6_000,
+    );
+    // After ~25 s (retries ongoing) remind user to open the extension
+    const hintTimer = setTimeout(
+      () => setConnectStatus('Still waiting \u2014 try clicking the extension icon in your toolbar'),
+      25_000,
+    );
+
     try {
       await connectWallet(provider.id);
       showToast('Wallet connected successfully.', 'success');
@@ -124,6 +136,8 @@ export function WalletModal() {
       console.error('Connection failed:', error);
       showToast(message, 'error');
     } finally {
+      clearTimeout(retryTimer);
+      clearTimeout(hintTimer);
       setConnectingId(null);
       setConnectStatus(null);
     }

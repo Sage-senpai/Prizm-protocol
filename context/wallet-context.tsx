@@ -122,14 +122,14 @@ export function WalletProvider({ children }: { children: ReactNode }) {
   // ── Actions ────────────────────────────────────────────────────────────────
 
   const connectWallet = useCallback(async (selectedWallet: WalletType) => {
-    // 55-second outer timeout:
+    // 100-second outer timeout covers worst-case MV3 retry cycle:
     //   40 s  first enable() attempt (user approves extension popup)
-    // + 10 s  crypto WASM init
-    // +  5 s  overhead
+    // +  3 retries × (4 s delay + 15 s timeout) = 57 s
+    // +  3 s  crypto WASM overhead (should be preloaded)
     const timeout = new Promise<never>((_, reject) =>
       setTimeout(
         () => reject(new Error('Wallet connection timed out. Check that your extension is unlocked and try again.')),
-        55_000,
+        100_000,
       ),
     );
 

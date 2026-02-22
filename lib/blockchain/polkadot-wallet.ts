@@ -114,15 +114,16 @@ async function enableSingleExtension(appName: string, injectedKey: string) {
     if (!serviceWorkerError) throw err; // user rejected or other non-retryable error
   }
 
-  // Attempts 2-3: Short-timeout retries only for service-worker wake-up.
-  // The first call woke the sleeping worker; now we retry to catch it awake.
-  for (let attempt = 2; attempt <= 3; attempt++) {
-    await delay(2_500);
+  // Attempts 2-4: Retries only for service-worker wake-up errors.
+  // The first call woke the sleeping worker; wait for it to fully initialise
+  // (Chrome MV3 workers can take 3-5 s) then retry.
+  for (let attempt = 2; attempt <= 4; attempt++) {
+    await delay(4_000); // 4 s – enough for MV3 worker to reinitialise
     try {
       return await Promise.race([
         injectedWeb3[injectedKey].enable(appName),
         new Promise<never>((_, reject) =>
-          setTimeout(() => reject(new Error('ENABLE_TIMEOUT')), 8_000),
+          setTimeout(() => reject(new Error('ENABLE_TIMEOUT')), 15_000),
         ),
       ]);
     } catch (retryErr: unknown) {
@@ -135,7 +136,7 @@ async function enableSingleExtension(appName: string, injectedKey: string) {
         retryMsg.includes('Failed to send message') ||
         retryMsg === 'ENABLE_TIMEOUT';
 
-      if (!stillBad || attempt === 3) break;
+      if (!stillBad || attempt === 4) break;
     }
   }
 
