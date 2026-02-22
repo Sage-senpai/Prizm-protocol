@@ -4,7 +4,7 @@ import React, { createContext, useContext, useEffect, useMemo, useState, useCall
 import { connectEvmWallet } from '@/lib/blockchain/evm';
 import { getPolkadotAccounts } from '@/lib/blockchain/polkadot-wallet';
 
-export type WalletType = 'polkadot-js' | 'talisman' | 'subwallet' | 'nova' | 'metamask';
+export type WalletType = 'polkadot-js' | 'talisman' | 'subwallet' | 'nova' | 'metamask' | 'demo';
 export type WalletNamespace = 'polkadot' | 'evm';
 
 // ─── Tier helpers ─────────────────────────────────────────────────────────────
@@ -63,7 +63,11 @@ const WALLET_SOURCES: Record<WalletType, string | null> = {
   subwallet:     'subwallet-js',
   nova:          'nova',
   metamask:      null,
+  demo:          null,
 };
+
+/** Recognisable fake address used in demo mode (valid hex, clearly not real) */
+const DEMO_ADDRESS = '0xdEAd0000000000000000000000000000000dEAd0';
 
 // ─── Provider ─────────────────────────────────────────────────────────────────
 
@@ -132,6 +136,17 @@ export function WalletProvider({ children }: { children: ReactNode }) {
         100_000,
       ),
     );
+
+    // Demo mode: skip all wallet calls and use a fake address
+    if (selectedWallet === 'demo') {
+      setAddress(DEMO_ADDRESS);
+      setWalletNamespace('evm');
+      setAccountSource(null);
+      setWalletType('demo');
+      setIsConnected(true);
+      setShowModal(false);
+      return;
+    }
 
     try {
       await Promise.race([

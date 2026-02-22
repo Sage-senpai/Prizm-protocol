@@ -80,6 +80,7 @@ function scanInstalledWallets(): DetectedMap {
     talisman: !!injected.talisman,
     subwallet: !!injected['subwallet-js'],
     nova: !!injected.nova,
+    demo: true, // always available
   };
 }
 
@@ -219,7 +220,45 @@ export function WalletModal() {
           })}
         </div>
 
-        <div className="mt-3 rounded-xl border border-black/10 bg-black/5 p-3 dark:border-white/10 dark:bg-white/5">
+        {/* Demo / Guest access fallback */}
+        <div className="relative my-1 flex items-center gap-3">
+          <div className="h-px flex-1 bg-black/10 dark:bg-white/10" />
+          <span className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground">or</span>
+          <div className="h-px flex-1 bg-black/10 dark:bg-white/10" />
+        </div>
+
+        <button
+          type="button"
+          disabled={connectingId !== null}
+          onClick={async () => {
+            setConnectingId('demo');
+            try {
+              await connectWallet('demo');
+              showToast('Demo mode active — wallet actions are simulated.', 'info');
+              setShowModal(false);
+            } catch {
+              showToast('Failed to start demo mode.', 'error');
+            } finally {
+              setConnectingId(null);
+            }
+          }}
+          className="glass flex w-full items-center gap-3 rounded-xl border border-dashed border-black/15 px-3 py-2.5 transition-all hover:border-black/30 disabled:opacity-60 dark:border-white/15 dark:hover:border-white/30"
+        >
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-black/10 bg-black/5 text-sm font-bold text-muted-foreground dark:border-white/10 dark:bg-white/5">
+            &#9654;
+          </div>
+          <div className="flex-1 text-left">
+            <p className="font-semibold text-foreground">Demo / Guest Access</p>
+            <p className="text-xs text-muted-foreground">Explore the UI without a real wallet</p>
+          </div>
+          {connectingId === 'demo' ? (
+            <Loader2 className="h-4 w-4 shrink-0 animate-spin text-foreground" />
+          ) : (
+            <ExternalLink className="h-4 w-4 shrink-0 text-muted-foreground" />
+          )}
+        </button>
+
+        <div className="mt-2 rounded-xl border border-black/10 bg-black/5 p-3 dark:border-white/10 dark:bg-white/5">
           <p className="text-xs text-muted-foreground">
             By connecting a wallet, you agree to the Terms of Service and acknowledge the current demo state.
           </p>
